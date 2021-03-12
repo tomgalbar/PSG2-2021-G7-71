@@ -271,6 +271,23 @@
 	        <picUrl>http://www.example.com/jdoe/pic</picUrl>
 	      </properties>
 	    </developer>
+	    
+	    <developer>
+	      <id>tomgalbar</id>
+	      <name>Tomas Galera Barrera</name>
+	      <email>tomgalbar@alum.us.es</email>
+	      <organization>G7-71</organization>
+	      <organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G7-71.git</organizationUrl>
+	      <roles>
+	        <role>tester</role>
+	        <role>developer</role>
+	      </roles>
+	      <timezone>España/Madrid</timezone>
+	      <properties>
+	        <picUrl>http://www.example.com/jdoe/pic</picUrl>
+	      </properties>
+	    </developer>
+	    
 	  </developers>
 
 </project>
