@@ -255,6 +255,22 @@
         </license>
     </licenses>
 
-
+	<developers>
+    	<developer>
+	      <id>serfiggom</id>
+	      <name>Servando Figueroa Gomez</name>
+	      <email>servandofg12@gmail.com</email>
+	      <organization>G7-71</organization>
+	      <organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G7-71.git</organizationUrl>
+	      <roles>
+	        <role>tester</role>
+	        <role>developer</role>
+	      </roles>
+	      <timezone>España/Madrid</timezone>
+	      <properties>
+	        <picUrl>http://www.example.com/jdoe/pic</picUrl>
+	      </properties>
+	    </developer>
+	  </developers>
 
 </project>
