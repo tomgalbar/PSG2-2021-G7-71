@@ -302,8 +302,7 @@
 	      <properties>
 	        <picUrl>http://www.example.com/jdoe/pic</picUrl>
 	      </properties>
-	    </developer>
-	    
+	    </developer>	    
 	  </developers>
 
 </project>
