@@ -16,13 +16,29 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.Formatter;
+import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 /**
  * @author Juergen Hoeller
@@ -34,10 +50,22 @@ import java.util.Map;
 public class VetController {
 
 	private final VetService vetService;
+	
+	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm"; 
 
 	@Autowired
 	public VetController(VetService clinicService) {
 		this.vetService = clinicService;
+	}
+	
+	@ModelAttribute("specialties")
+	public Collection<Specialty> populateSpecialties() {
+		return this.vetService.findSpecialties();
+	}
+	
+	@InitBinder("vet")
+	public void initVetBinder(WebDataBinder dataBinder) {
+	dataBinder.setDisallowedFields("id");
 	}
 
 	@GetMapping(value = { "/vets" })
@@ -59,6 +87,47 @@ public class VetController {
 		Vets vets = new Vets();
 		vets.getVetList().addAll(this.vetService.findVets());
 		return vets;
+	}
+	
+	@GetMapping(value = "/vets/new")
+	public String initCreationForm(Map<String, Object> model) {
+		Vet vet = new Vet();
+		model.put("vet", vet);
+		return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+	}
+	
+	@PostMapping(value = "/vets/new")
+	public String processCreationForm(@Valid Vet vet,Specialty sp, BindingResult result) {
+		if (result.hasErrors()) {
+			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			//creating vet
+			vet.addSpecialty(sp);
+			this.vetService.saveVet(vet);
+			
+			return "redirect:/vets";
+		}
+	}
+	
+	@Component
+	public class VetSpecialtyFormatter implements Formatter<Specialty> {
+
+		@Override
+		public String print(Specialty specialty, Locale locale) {
+			return specialty.getName();
+		}
+
+		@Override
+		public Specialty parse(String text, Locale locale) throws ParseException {
+			Collection<Specialty> findSpecialties = vetService.findSpecialties();
+			for(Specialty specialty: findSpecialties) {
+				if(specialty.getName().equals(text)) {
+					return specialty;
+				}
+			}
+			throw new ParseException("type not found: " + text, 0);
+		}
 	}
 
 }
