@@ -23,6 +23,7 @@ import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Visit;
 
 /**
  * Spring Data JPA specialization of the {@link PetRepository} interface
@@ -53,5 +54,10 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Pet pet) throws DataAccessException;
+	
+	void delete(Pet pet) throws DataAccessException;
+	
+	@Query(value = "DELETE FROM VISIT", nativeQuery = true)
+	void deleteVisit(int visitId) throws DataAccessException;
 
 }

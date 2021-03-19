@@ -73,7 +73,16 @@ public class PetService {
             }else
                 petRepository.save(pet);                
 	}
-
+	
+	@Transactional
+	public void deletePet(Pet pet) throws DataAccessException {
+		this.petRepository.delete(pet);
+	}
+	
+	@Transactional
+	public void deleteVisit(int visitId) throws DataAccessException {
+		this.petRepository.deleteVisit(visitId);
+	}
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);

@@ -75,6 +75,14 @@ public class OwnerController {
 			return "redirect:/owners/" + owner.getId();
 		}
 	}
+	
+	//Delete Owner
+	@GetMapping(value = "/owners/{ownerId}/delete")
+	public String deleteOwner(@PathVariable("ownerId") int ownerId) {
+		Owner ownerToDelete = this.ownerService.findOwnerById(ownerId);
+		this.ownerService.deleteOwner(ownerToDelete);
+		return "redirect:/owners";
+	}
 
 	@GetMapping(value = "/owners/find")
 	public String initFindForm(Map<String, Object> model) {
