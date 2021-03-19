@@ -87,7 +87,7 @@ public class VisitController {
 	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits")
 	public String showVisits(@PathVariable int petId, Map<String, Object> model) {
 		model.put("visits", this.petService.findPetById(petId).getVisits());
-		return "visit/visitList";
+		return "pets/visitList";
 	}
 
 	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
