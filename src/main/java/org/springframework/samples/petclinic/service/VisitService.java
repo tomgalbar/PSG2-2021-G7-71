@@ -30,8 +30,8 @@ public class VisitService {
 	}
 	
 	@Transactional
-	public void deleteVisit(Integer visitId) throws DataAccessException {
-		this.visitRepository.deleteById(visitId);
+	public void deleteVisit(Visit visit) throws DataAccessException {
+		this.visitRepository.delete(visit);
 	}
 	
 	@Transactional(readOnly = true)

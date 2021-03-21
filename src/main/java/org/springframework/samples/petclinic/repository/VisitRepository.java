@@ -50,5 +50,5 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	
 	Visit findVisitById(Integer visitId);
 
-	void deleteById(Integer visitId) throws DataAccessException;
+	void delete(Visit visit) throws DataAccessException;
 }

@@ -110,7 +110,7 @@ public class VisitController {
 		pet.deleteVisit((Visit)model.getAttribute("visit"));
 		pet.deleteVisit(visit);
 		this.petService.savePet(pet);
-		this.visitService.deleteVisit(visitId);
+		this.visitService.deleteVisit(this.visitService.findVisitById(visitId));
 		return "redirect:/owners/{ownerId}";
 	}
 	
