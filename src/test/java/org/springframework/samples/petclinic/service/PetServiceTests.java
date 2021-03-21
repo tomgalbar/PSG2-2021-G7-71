@@ -75,6 +75,9 @@ class PetServiceTests {
 	protected PetService petService;
         
         @Autowired
+    	protected VisitService visitService;
+        
+        @Autowired
 	protected OwnerService ownerService;	
 
 	@Test
@@ -202,7 +205,7 @@ class PetServiceTests {
 		Visit visit = new Visit();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
-		this.petService.saveVisit(visit);
+		this.visitService.saveVisit(visit);
             try {
                 this.petService.savePet(pet7);
             } catch (DuplicatedPetNameException ex) {
@@ -216,7 +219,7 @@ class PetServiceTests {
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
-		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
+		Collection<Visit> visits = this.visitService.findVisitsByPetId(7);
 		assertThat(visits.size()).isEqualTo(2);
 		Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
 		assertThat(visitArr[0].getPet()).isNotNull();
