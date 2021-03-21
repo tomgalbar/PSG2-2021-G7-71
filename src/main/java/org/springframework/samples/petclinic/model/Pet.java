@@ -34,8 +34,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * Simple business object representing a pet.
@@ -59,9 +57,12 @@ public class Pet extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
-
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
+	
+	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Booking> bookings;
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
@@ -107,6 +108,33 @@ public class Pet extends NamedEntity {
 	public void addVisit(Visit visit) {
 		getVisitsInternal().add(visit);
 		visit.setPet(this);
+	}
+	
+	public void deleteVisit(Visit visit) {
+		getVisitsInternal().remove(visit);
+		visit.setPet(this);
+	}
+
+	protected List<Booking> getBookingsInternal() {
+		if (this.bookings == null) {
+			this.bookings = new ArrayList<>();
+		}
+		return this.bookings;
+	}
+	
+	protected void setBookingsInternal(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+	
+	public List<Booking> getBookings() {
+		List<Booking> sortedBookings = new ArrayList<Booking>(getBookingsInternal());
+		PropertyComparator.sort(sortedBookings, new MutableSortDefinition("startDate", false, false));
+		return Collections.unmodifiableList(sortedBookings);
+	}
+
+	public void addBooking(Booking booking) {
+		getBookingsInternal().add(booking);
+		booking.setPet(this);
 	}
 
 }
