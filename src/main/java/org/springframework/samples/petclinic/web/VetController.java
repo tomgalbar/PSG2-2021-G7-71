@@ -97,37 +97,14 @@ public class VetController {
 	}
 	
 	@PostMapping(value = "/vets/new")
-	public String processCreationForm(@Valid Vet vet,Specialty sp, BindingResult result) {
+	public String processCreationForm(@Valid Vet vet, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
 		}
 		else {
 			//creating vet
-			vet.addSpecialty(sp);
 			this.vetService.saveVet(vet);
-			
 			return "redirect:/vets";
 		}
 	}
-	
-	@Component
-	public class VetSpecialtyFormatter implements Formatter<Specialty> {
-
-		@Override
-		public String print(Specialty specialty, Locale locale) {
-			return specialty.getName();
-		}
-
-		@Override
-		public Specialty parse(String text, Locale locale) throws ParseException {
-			Collection<Specialty> findSpecialties = vetService.findSpecialties();
-			for(Specialty specialty: findSpecialties) {
-				if(specialty.getName().equals(text)) {
-					return specialty;
-				}
-			}
-			throw new ParseException("type not found: " + text, 0);
-		}
-	}
-
 }

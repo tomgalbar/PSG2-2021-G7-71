@@ -46,6 +46,8 @@ public interface VetRepository extends Repository<Vet, Integer>{
 
 	@Query ("SELECT s FROM Specialty s")
 	Collection<Specialty> findAllSpecialties();
+	
+	
 
 
 }
