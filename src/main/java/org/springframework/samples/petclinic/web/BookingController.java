@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.service.BookingService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,12 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class BookingController {
 	
-	private final BookingService bookingService;
 	private final PetService petService;
 	
 	@Autowired
-	public BookingController(BookingService bookingService, PetService petService) {
-		this.bookingService = bookingService;
+	public BookingController(PetService petService) {
 		this.petService = petService;
 	}
 	
