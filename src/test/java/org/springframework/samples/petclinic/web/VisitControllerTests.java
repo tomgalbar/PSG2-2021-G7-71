@@ -16,8 +16,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.samples.petclinic.service.VisitService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,13 +35,18 @@ import org.springframework.test.web.servlet.MockMvc;
 			excludeAutoConfiguration= SecurityConfiguration.class)
 class VisitControllerTests {
 
+	private static final int TEST_OWNER_ID = 1;
 	private static final int TEST_PET_ID = 1;
+	private static final int TEST_VISIT_ID = 1;
 
 	@Autowired
 	private VisitController visitController;
 
 	@MockBean
 	private PetService clinicService;
+	
+	@MockBean
+	private VisitService visitService;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -46,6 +54,7 @@ class VisitControllerTests {
 	@BeforeEach
 	void setup() {
 		given(this.clinicService.findPetById(TEST_PET_ID)).willReturn(new Pet());
+		given(this.visitService.findVisitById(TEST_VISIT_ID)).willReturn(new Visit());
 	}
 
         @WithMockUser(value = "spring")
@@ -82,4 +91,12 @@ class VisitControllerTests {
 				.andExpect(model().attributeExists("visits")).andExpect(view().name("visitList"));
 	}
 
+	@WithMockUser(value = "spring")
+    @Test
+    void testDeleteVisitFromPet() throws Exception {
+    	mockMvc.perform(get("/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete", TEST_OWNER_ID, TEST_PET_ID, TEST_VISIT_ID))
+    	.andExpect(status().is3xxRedirection())
+    	.andExpect(view().name("redirect:/owners/{ownerId}"));
+    }
+	
 }

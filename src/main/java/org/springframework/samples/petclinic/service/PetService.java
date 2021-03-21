@@ -43,12 +43,9 @@ import org.springframework.util.StringUtils;
 public class PetService {
 
 	private PetRepository petRepository;
-	
 	private VisitRepository visitRepository;
-	
 	private BookingRepository bookingRepository;
-	
-
+  
 	@Autowired
 	public PetService(PetRepository petRepository,
 			VisitRepository visitRepository, BookingRepository bookingRepository) {
@@ -62,10 +59,6 @@ public class PetService {
 		return petRepository.findPetTypes();
 	}
 	
-	@Transactional
-	public void saveVisit(Visit visit) throws DataAccessException {
-		visitRepository.save(visit);
-	}
 
 	@Transactional(readOnly = true)
 	public Pet findPetById(int id) throws DataAccessException {
@@ -80,7 +73,12 @@ public class PetService {
             }else
                 petRepository.save(pet);                
 	}
-
+	
+	@Transactional
+	public void deletePet(Pet pet) throws DataAccessException {
+		this.petRepository.delete(pet);
+	}
+  
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
 	}

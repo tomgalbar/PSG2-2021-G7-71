@@ -89,5 +89,13 @@ class VetServiceTests {
 		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
 	}
 
+	@Test
+	@Transactional
+	void shouldDeleteVet() {
+		Vet vet = this.vetService.findVetById(1);
+		this.vetService.deleteVet(vet);
+		Vet vetDeleted = this.vetService.findVetById(1);
+		assertThat(vetDeleted).isEqualTo(null);
+	}
 
 }

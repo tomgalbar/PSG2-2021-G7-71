@@ -32,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 		excludeAutoConfiguration= SecurityConfiguration.class)
 class VetControllerTests {
+	
+	private static final int TEST_VET_ID = 1;
 
 	@Autowired
 	private VetController vetController;
@@ -75,4 +77,12 @@ class VetControllerTests {
 				.andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
 	}
 
+	@WithMockUser(value = "spring")
+    @Test
+    void testDeleteVet() throws Exception {
+    	mockMvc.perform(get("/vets/{vetId}/delete", TEST_VET_ID))
+    	.andExpect(status().is3xxRedirection())
+    	.andExpect(view().name("redirect:/vets"));
+    }
+	
 }
