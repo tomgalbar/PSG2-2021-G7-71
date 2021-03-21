@@ -16,8 +16,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "bookings")
 public class Booking extends BaseEntity {
 	
+	public Booking() {
+		this.startDate = LocalDate.now();
+		this.finishDate = LocalDate.now();
+	}
+	
 	@Column(name = "details")
-	@NotBlank(message = "Los detalles no pueden ser vacíos")
+	@NotBlank(message = "Los detalles no pueden estar vacíos")
 	private String details;
 	
 	@Column(name = "start_date")

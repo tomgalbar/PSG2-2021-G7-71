@@ -52,9 +52,25 @@ public class BookingController {
 	// Spring MVC calls method loadPetWithBooking(...) before processNewBookingForm is called
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/new")
 	public String processNewBookingForm(@Valid Booking booking, BindingResult result) {
+		
+		//Primero se comprueban si hay errores para @Valid (entidad y sus anotaciones)
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateBookingForm";
 		}
+		
+		//Comprobacion para la coherencia de las fechas
+		if(booking.getStartDate().isAfter(booking.getFinishDate())) {
+			result.rejectValue("finishDate", "startDateAfterFinishDate", "La fecha de fin no puede ser anterior a la de inicio");
+			return "pets/createOrUpdateBookingForm";
+		}
+		
+		//Comprobacion para ver si hay mas de 1 reserva dentro de un mismo periodo de tiempo
+		Boolean duplicated = petService.duplicatedBooking(booking);
+		if(duplicated) {
+			result.rejectValue("finishDate", "duplicatedBooking", "Ya dispone de una reserva en dicho periodo de tiempo");
+			return "pets/createOrUpdateBookingForm";
+		}
+
 		else {
 			this.petService.saveBooking(booking);
 			return "redirect:/owners/{ownerId}";
