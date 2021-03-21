@@ -50,7 +50,5 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 	
 	Visit findVisitById(Integer visitId);
 
-	@Modifying
-	@Query(value = "DELETE FROM VISITS WHERE ID = ?1", nativeQuery = true)
 	void deleteById(Integer visitId) throws DataAccessException;
 }

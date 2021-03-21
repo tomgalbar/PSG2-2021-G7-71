@@ -68,9 +68,6 @@
                         <tr>
                             <th>Visit Date</th>
                             <th>Description</th>
-                            <c:if test="${pet.visits.size()!=0}">
-                            	<th>Visit list</th>
-                            </c:if>
                             <th>Delete Pet</th>
                         </tr>
                         </thead>
@@ -78,6 +75,13 @@
                             <tr>
                                 <td><petclinic:localDate date="${visit.date}" pattern="yyyy-MM-dd"/></td>
                                 <td><c:out value="${visit.description}"/></td>
+                                <td><spring:url value="/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete" var="deleteVisitUrl">
+                                	<spring:param name="ownerId" value="${owner.id}"/>
+                                    <spring:param name="petId" value="${pet.id}"/>
+                                    <spring:param name="visitId" value="${visit.id}"/>
+                                </spring:url>
+                                <a href="${fn:escapeXml(deleteVisitUrl)}">Delete Visit</a>
+                                </td>
                             </tr>
                         </c:forEach>
                         <tr>
@@ -95,15 +99,6 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitUrl)}">Add Visit</a>     
                             </td>
-                           <c:if test="${pet.visits.size()!=0}">
-	                            <td>
-	                                <spring:url value="/owners/{ownerId}/pets/{petId}/visits" var="visitsUrl">
-	                                    <spring:param name="ownerId" value="${owner.id}"/>
-	                                    <spring:param name="petId" value="${pet.id}"/>
-	                                </spring:url>
-	                                <a href="${fn:escapeXml(visitsUrl)}">Visit list</a>     
-	                            </td>
-	                     	</c:if>
                             <td>
                                 <spring:url value="/owners/{ownerId}/pets/{petId}/delete" var="deleteUrl">
                                     <spring:param name="ownerId" value="${owner.id}"/>
