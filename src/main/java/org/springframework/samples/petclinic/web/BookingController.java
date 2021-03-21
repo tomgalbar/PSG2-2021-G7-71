@@ -49,7 +49,7 @@ public class BookingController {
 		return "pets/createOrUpdateBookingForm";
 	}
 	
-	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
+	// Spring MVC calls method loadPetWithBooking(...) before processNewBookingForm is called
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/bookings/new")
 	public String processNewBookingForm(@Valid Booking booking, BindingResult result) {
 		if (result.hasErrors()) {

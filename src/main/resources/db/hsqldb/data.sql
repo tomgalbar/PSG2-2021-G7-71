@@ -62,3 +62,8 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (1, 1, '2021-03-04','2021-03-20', 'Hotel PetClinic habitacion simple');
+INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (2, 2, '2021-03-07','2021-03-10', 'Hotel PetClinic habitacion doble');
+INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (3, 3, '2021-03-09','2021-03-16', 'Hotel FiveStars habitacion completa');
+INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (4, 4, '2021-03-11','2021-03-25', 'Hotel PetClinic habitacion doble y desayuno');
+

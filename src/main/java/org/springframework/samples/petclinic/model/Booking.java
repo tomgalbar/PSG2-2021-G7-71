@@ -17,16 +17,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Booking extends BaseEntity {
 	
 	@Column(name = "details")
-	@NotBlank
+	@NotBlank(message = "Los detalles no pueden ser vacíos")
 	private String details;
 	
 	@Column(name = "start_date")
-	@NotNull
+	@NotNull(message = "La fecha no puede ser nula. Seleccione una fecha por favor")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startDate;
 	
 	@Column(name = "finish_date")
-	@NotNull
+	@NotNull(message = "La fecha no puede ser nula. Seleccione una fecha por favor")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate finishDate;
 	
