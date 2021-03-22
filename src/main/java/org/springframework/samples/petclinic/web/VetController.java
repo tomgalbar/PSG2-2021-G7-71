@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
+import org.springframework.samples.petclinic.model.SpecialtyConstructor;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -97,12 +100,22 @@ public class VetController {
 	}
 	
 	@PostMapping(value = "/vets/new")
-	public String processCreationForm(@Valid Vet vet, BindingResult result) {
+	public String processCreationForm(@Valid Vet vet, SpecialtyConstructor specialties, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			//creating vet
+			if (specialties!=null) {	
+				List<String> lsp = specialties.getSpecialties();
+				
+				for (int i = 0; i < lsp.size(); i++) {
+					Specialty sp = vetService.findSpecialtyByName(lsp.get(i));
+					if(sp!=null) {
+						vet.addSpecialty(sp);
+					}
+				}
+			}
+			
 			this.vetService.saveVet(vet);
 			return "redirect:/vets";
 		}
