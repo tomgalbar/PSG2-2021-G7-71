@@ -134,7 +134,7 @@
 	                                    <spring:param name="petId" value="${pet.id}"/>
 	                                    <spring:param name="bookingId" value="${booking.id}"/>
 	                                </spring:url>
-	                                <a href="${fn:escapeXml(deleteBookingUrl)}">Delete booking</a>
+	                                <a href="${fn:escapeXml(deleteBookingUrl)}"><fmt:message key="deleteBooking"/></a>
                                 </td>
                             </tr>
                         </c:forEach>
