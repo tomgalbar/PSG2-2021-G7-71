@@ -22,5 +22,15 @@ public class BookingService {
 	public List<Booking> findBookingsByPetId(Integer id){
 		return bookingRepository.findByPetId(id);
 	}
+	
+	@Transactional(readOnly = true)
+	public Booking findBookingById(Integer id){
+		return bookingRepository.findById(id);
+	}
+	
+	@Transactional
+	public void deleteBooking(Booking booking) {
+		this.bookingRepository.delete(booking);
+	}
 
 }
