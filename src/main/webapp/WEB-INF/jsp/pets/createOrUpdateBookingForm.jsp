@@ -1,5 +1,6 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
@@ -15,16 +16,16 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2><c:if test="${booking['new']}">New </c:if>Booking</h2>
+        <h2><c:if test="${booking['new']}"><fmt:message key="neww"/> </c:if><fmt:message key="booking"/></h2>
 
-        <b>Pet</b>
+        <b><fmt:message key="pet"/></b>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Birth Date</th>
-                <th>Type</th>
-                <th>Owner</th>
+                <th><fmt:message key="name"/></th>
+                <th><fmt:message key="birthDate"/></th>
+                <th><fmt:message key="type"/></th>
+                <th><fmt:message key="owner"/></th>
             </tr>
             </thead>
             <tr>
@@ -37,26 +38,29 @@
 
         <form:form modelAttribute="booking" class="form-horizontal">
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Start date" name="startDate"/>
-                <petclinic:inputField label="Finish date" name="finishDate"/>
-                <petclinic:inputField label="Details" name="details"/>
+            <fmt:message var="startDate" key="startDate"/>
+        	<fmt:message var="finishDate" key="finishDate"/>
+        	<fmt:message var="details" key="details"/>
+                <petclinic:inputField label="${startDate}" name="startDate"/>
+                <petclinic:inputField label="${finishDate}" name="finishDate"/>
+                <petclinic:inputField label="${details}" name="details"/>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <input type="hidden" name="petId" value="${booking.pet.id}"/>
-                    <button class="btn btn-default" type="submit">Add Booking</button>
+                    <button class="btn btn-default" type="submit"><fmt:message key="addBooking"/></button>
                 </div>
             </div>
         </form:form>
 
         <br/>
-        <b>Previous Bookings</b>
+        <b><fmt:message key="previousBookings"/></b>
         <table class="table table-striped">
             <tr>
-                <th>Start Date</th>
-                <th>Finish Date</th>
-                <th>Details</th>
+                <th><fmt:message key="startDate"/></th>
+                <th><fmt:message key="finishDate"/></th>
+                <th><fmt:message key="details"/></th>
             </tr>
             <c:forEach var="booking" items="${booking.pet.bookings}">
                 <c:if test="${!booking['new']}">

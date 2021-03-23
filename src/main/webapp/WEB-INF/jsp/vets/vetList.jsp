@@ -13,7 +13,7 @@
         <tr>
             <th><fmt:message key="name"/></th>
             <th><fmt:message key="specialties"/></th>
-            <th>Delete</th>
+            <th><fmt:message key="delete"/></th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
                		<spring:url value="/vets/{vetId}/delete" var="deleteVetUrl">
                 		<spring:param name="vetId" value="${vet.id}"/>
                 	</spring:url>
-                	<a href="${fn:escapeXml(deleteVetUrl)}">Delete Vet</a>
+                	<a href="${fn:escapeXml(deleteVetUrl)}"><fmt:message key="deleteVet"/></a>
                 </td>
             </tr>
         </c:forEach>
