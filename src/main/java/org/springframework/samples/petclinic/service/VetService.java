@@ -80,5 +80,10 @@ public class VetService {
 	public Specialty findSpecialtyByName(String name) {
 		return vetRepository.findSpecialtyByName(name).orElse(null);
 	}
+	
+	@Transactional(readOnly = true)
+	public Vet findVetById(int id) throws DataAccessException{
+		return vetRepository.findById(id);
+	}
 
 }

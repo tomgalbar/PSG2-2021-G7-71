@@ -15,8 +15,11 @@
  */
 package org.springframework.samples.petclinic.web;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
+import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.SpecialtyConstructor;
@@ -24,6 +27,7 @@ import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Vets;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -120,4 +125,34 @@ public class VetController {
 			return "redirect:/vets";
 		}
 	}
+	
+	@GetMapping(value = "/vets/{vetId}/edit")
+	public String initUpdateVetForm(@PathVariable("vetId") int vetId, ModelMap model) {
+		Vet vet = this.vetService.findVetById(vetId);
+		model.addAttribute(vet);
+		return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+	}
+	
+    @PostMapping(value = "/vets/{vetId}/edit")
+	public String processUpdateForm(@Valid Vet vet, SpecialtyConstructor specialties, BindingResult result,@PathVariable("vetId") int vetId) {
+		if (result.hasErrors()) {
+			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			vet.setId(vetId);
+			if (specialties!=null) {	
+				List<String> lsp = specialties.getSpecialties();
+				
+				for (int i = 0; i < lsp.size(); i++) {
+					Specialty sp = vetService.findSpecialtyByName(lsp.get(i));
+					if(sp!=null) {
+						vet.addSpecialty(sp);
+					}
+				}
+			}
+			this.vetService.saveVet(vet);
+			return "redirect:/vets";
+		}
+	}
+
 }
