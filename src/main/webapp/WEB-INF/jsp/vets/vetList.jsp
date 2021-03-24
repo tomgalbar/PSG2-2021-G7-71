@@ -36,7 +36,7 @@
                   <spring:url value="/vets/{vetId}/edit"
 							      var="vet2Url">
 							      <spring:param name="vetId" value="${vet.id}" />
-						      </spring:url> <a href="${fn:escapeXml(vet2Url)}">Editar</a></td>
+						      </spring:url> <a href="${fn:escapeXml(vet2Url)}"><fmt:message key="editVet"/></a></td>
                 <td>
                		<spring:url value="/vets/{vetId}/delete" var="deleteVetUrl">
                 		<spring:param name="vetId" value="${vet.id}"/>
@@ -50,7 +50,7 @@
 
     <table class="table-buttons">
         <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/vets/new" htmlEscape="true"/>'>Add Vet</a>
+		<a class="btn btn-default" href='<spring:url value="/vets/new" htmlEscape="true"/>'><fmt:message key="addVet"/></a>
 		</sec:authorize>
         <tr>
             <td>

@@ -149,6 +149,7 @@ class VetControllerTests {
 				.andExpect(view().name("vets/createOrUpdateVetForm"));
 	}
 
+	@WithMockUser(value = "spring")
     @Test
     void testDeleteVet() throws Exception {
     	mockMvc.perform(get("/vets/{vetId}/delete", TEST_VET_ID))
