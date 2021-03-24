@@ -152,6 +152,7 @@ public class VetController {
 			this.vetService.saveVet(vet);
 			return "redirect:/vets";
 		}
+    }
     
 	@GetMapping(value = "/vets/{vetId}/delete")
 	public String deleteVet(@PathVariable("vetId") int vetId) {
