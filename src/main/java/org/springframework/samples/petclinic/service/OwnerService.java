@@ -45,15 +45,16 @@ public class OwnerService {
 
 	private OwnerRepository ownerRepository;	
 	
-	@Autowired
 	private UserService userService;
 	
-	@Autowired
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
-	public OwnerService(OwnerRepository ownerRepository) {
+	public OwnerService(OwnerRepository ownerRepository, UserService userService,
+			AuthoritiesService authoritiesService) {
 		this.ownerRepository = ownerRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}	
 
 	@Transactional(readOnly = true)
@@ -75,5 +76,13 @@ public class OwnerService {
 		//creating authorities
 		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
 	}		
+	
+	@Transactional
+	public void deleteOwner(Owner owner) throws DataAccessException {
+		//deleting owner
+		ownerRepository.delete(owner);	
+
+			
+	}	
 
 }

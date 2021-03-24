@@ -33,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(controllers = VetController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class VetControllerTests {
+	
+	private static final int TEST_VET_ID = 1;
 
 	private static final int TEST_Vet_ID = 2;
 
@@ -147,4 +149,11 @@ class VetControllerTests {
 				.andExpect(view().name("vets/createOrUpdateVetForm"));
 	}
 
+    @Test
+    void testDeleteVet() throws Exception {
+    	mockMvc.perform(get("/vets/{vetId}/delete", TEST_VET_ID))
+    	.andExpect(status().is3xxRedirection())
+    	.andExpect(view().name("redirect:/vets"));
+    }
+	
 }

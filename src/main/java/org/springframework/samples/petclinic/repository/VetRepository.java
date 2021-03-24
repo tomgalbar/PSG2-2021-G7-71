@@ -26,6 +26,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Specialty;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.samples.petclinic.model.Vet;
 
 /**
@@ -46,6 +47,14 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
+	
+	Vet findById(int vetId) throws DataAccessException;
+	
+	void delete(Vet vet) throws DataAccessException;
+
+	@Modifying
+	@Query(value = "DELETE FROM VET_SPECIALTIES WHERE VET_ID = ?1", nativeQuery = true)
+	void deleteVetSpecialityUnion(@Param("vetId") Integer vetId);
 
 	void save(Vet vet)throws DataAccessException;
 

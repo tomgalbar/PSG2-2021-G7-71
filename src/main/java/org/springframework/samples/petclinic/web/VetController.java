@@ -39,13 +39,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.validation.Valid;
 
 /**
@@ -154,6 +152,11 @@ public class VetController {
 			this.vetService.saveVet(vet);
 			return "redirect:/vets";
 		}
+    
+	@GetMapping(value = "/vets/{vetId}/delete")
+	public String deleteVet(@PathVariable("vetId") int vetId) {
+		Vet vet = this.vetService.findVetById(vetId);
+		this.vetService.deleteVet(vet);
+		return "redirect:/vets";
 	}
-
 }

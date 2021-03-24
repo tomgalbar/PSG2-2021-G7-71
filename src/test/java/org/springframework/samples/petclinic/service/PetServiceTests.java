@@ -16,9 +16,12 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
@@ -73,6 +77,9 @@ import org.springframework.transaction.annotation.Transactional;
 class PetServiceTests {        
         @Autowired
 	protected PetService petService;
+        
+        @Autowired
+    	protected VisitService visitService;
         
         @Autowired
 	protected OwnerService ownerService;	
@@ -202,7 +209,7 @@ class PetServiceTests {
 		Visit visit = new Visit();
 		pet7.addVisit(visit);
 		visit.setDescription("test");
-		this.petService.saveVisit(visit);
+		this.visitService.saveVisit(visit);
             try {
                 this.petService.savePet(pet7);
             } catch (DuplicatedPetNameException ex) {
@@ -216,12 +223,69 @@ class PetServiceTests {
 
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
-		Collection<Visit> visits = this.petService.findVisitsByPetId(7);
+		Collection<Visit> visits = this.visitService.findVisitsByPetId(7);
 		assertThat(visits.size()).isEqualTo(2);
 		Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
 		assertThat(visitArr[0].getPet()).isNotNull();
 		assertThat(visitArr[0].getDate()).isNotNull();
 		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
+	
+	@Test
+	@Transactional
+	void shouldDeletePet() {
+		Pet pet = this.petService.findPetById(1);
+		this.petService.deletePet(pet);
+		Pet petDeleted = this.petService.findPetById(1);
+		assertThat(petDeleted).isEqualTo(null);
+	}
+		
+	@Test
+	void shouldFindBookingsByPetId() {
+		List<Booking> bookings = this.petService.findBookingsByPetId(1);
+		assertThat(bookings.size()).isEqualTo(1);
 
+		bookings = this.petService.findBookingsByPetId(7);
+		assertThat(bookings.isEmpty()).isTrue();
+	}
+	
+	@Test
+	void shouldHaveDuplicatedBooking() {
+		Booking b = new Booking();
+		b.setDetails("TEST");
+		b.setStartDate(LocalDate.of(2021, 01, 01));
+		
+		//NO duplicados
+		b.setFinishDate(LocalDate.of(2021, 01, 04));	
+		b.setPet(petService.findPetById(1));
+		
+		Boolean duplicated = petService.duplicatedBooking(b);
+		assertFalse(duplicated);
+		
+		//Duplicados
+		b.setStartDate(LocalDate.of(2021, 3, 6));
+		b.setFinishDate(LocalDate.of(2021, 3, 9));
+		
+		duplicated = petService.duplicatedBooking(b);
+		assertTrue(duplicated);
+	}
+	
+	@Test
+	void shouldAddBooking() {
+		
+		List<Booking> bookings = this.petService.findBookingsByPetId(1);
+		Integer tamI = bookings.size();
+		
+		Booking b = new Booking();
+		b.setDetails("TEST");
+		b.setStartDate(LocalDate.of(2021, 01, 01));
+		b.setFinishDate(LocalDate.of(2021, 01, 04));	
+		b.setPet(petService.findPetById(1));
+		
+		this.petService.saveBooking(b);
+		bookings = this.petService.findBookingsByPetId(1);
+		
+		assertThat(bookings.size()).isEqualTo(tamI+1);
+	}
+	
 }
