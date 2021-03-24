@@ -16,11 +16,11 @@
 		<div class="form-group has-feedback">
 		<fmt:message var="firstName" key="firstName"/>
         	<fmt:message var="lastName" key="lastName"/>
-        	<fmt:message var="specialties" key="specialties"/>
+        	<fmt:message var="specialty" key="specialties"/>
 			<petclinic:inputField label="${firstName}" name="firstName" />
 			<petclinic:inputField label="${lastName}" name="lastName" />
 			<div class="control-group">
-				<petclinic:selectField name="specialties" label="${specialties}" names="${specialties}"
+				<petclinic:selectField name="specialties" label="${specialty}" names="${specialties}"
 					size="${specialties.size()}" />
 			</div>
 		</div>
