@@ -23,6 +23,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
@@ -44,6 +45,12 @@ import org.springframework.util.StringUtils;
 public class VetService {
 
 	private VetRepository vetRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
 
 	@Autowired
@@ -54,6 +61,35 @@ public class VetService {
 	@Transactional(readOnly = true)	
 	public Collection<Vet> findVets() throws DataAccessException {
 		return vetRepository.findAll();
+	}
+	
+	@Transactional
+	public void saveVet(Vet vet) throws DataAccessException {
+		//creating owner
+		vetRepository.save(vet);
+		//creating user
+//		userService.saveUser(vet.getUser());
+		//creating authorities
+//		authoritiesService.saveAuthorities(vet.getUser().getUsername(), "owner");
+	}
+	@Transactional(readOnly = true)
+	public Collection<Specialty> findSpecialties() throws DataAccessException {
+		return vetRepository.findAllSpecialties();
+	}
+	
+	public Specialty findSpecialtyByName(String name) {
+		return vetRepository.findSpecialtyByName(name).orElse(null);
+	}
+	
+	@Transactional(readOnly = true)
+	public Vet findVetById(int id) throws DataAccessException{
+		return vetRepository.findById(id);
 	}	
+  
+	@Transactional
+	public void deleteVet(Vet vet) throws DataAccessException {
+		this.vetRepository.deleteVetSpecialityUnion(vet.getId()); 
+		this.vetRepository.delete(vet);
+	}
 
 }

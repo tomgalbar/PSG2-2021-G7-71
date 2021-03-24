@@ -31,6 +31,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.User;
@@ -88,6 +89,52 @@ class VetServiceTests {
 		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
 		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
 	}
+	@Test
+	void shouldFindVetById() {
+		Vet vet = this.vetService.findVetById(1);
+		assertThat(vet.getLastName()).startsWith("Carter");
+		assertThat(vet.getFirstName()).startsWith("James");
+		assertThat(vet.getNrOfSpecialties()).isEqualTo(0);
+	}
+	@Test
+	@Transactional
+	public void shouldInsertvet() {
+		Vet vet = this.vetService.findVetById(2);
+		Collection<Vet> vets = this.vetService.findVets();
+		int found = vets.size();
+		Vet vet2 = new Vet();
+		vet2.setFirstName("Sam");
+		vet2.setLastName("Schultz");
+		vet2.addSpecialty(vet.getSpecialties().get(0));
+                
+		this.vetService.saveVet(vet2);
+		assertThat(vet2.getId().longValue()).isNotEqualTo(0);
 
+		Collection<Vet> vets2 = this.vetService.findVets();
+		assertThat(vets2.size()).isEqualTo(found+1);
+	}
+	@Test
+	@Transactional
+	void shouldUpdatevet() {
+		Vet vet = this.vetService.findVetById(2);
+		String oldLastName = vet.getLastName();
+		String newLastName = oldLastName + "X";
+
+		vet.setLastName(newLastName);
+		this.vetService.saveVet(vet);
+
+		// retrieving new name from database
+		vet = this.vetService.findVetById(2);
+		assertThat(vet.getLastName()).isEqualTo(newLastName);
+	}
+
+	@Test
+	@Transactional
+	void shouldDeleteVet() {
+		Vet vet = this.vetService.findVetById(1);
+		this.vetService.deleteVet(vet);
+		Vet vetDeleted = this.vetService.findVetById(1);
+		assertThat(vetDeleted).isEqualTo(null);
+	}
 
 }

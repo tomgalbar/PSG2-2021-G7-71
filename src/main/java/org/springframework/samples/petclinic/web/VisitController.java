@@ -20,11 +20,16 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
+import org.springframework.samples.petclinic.repository.VisitRepository;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.samples.petclinic.service.VisitService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +44,13 @@ import org.springframework.web.bind.annotation.*;
 public class VisitController {
 
 	private final PetService petService;
+	
+	private final VisitService visitService;
 
 	@Autowired
-	public VisitController(PetService petService) {
+	public VisitController(PetService petService, VisitService visitService) {
 		this.petService = petService;
+		this.visitService = visitService;
 	}
 
 	@InitBinder
@@ -69,25 +77,41 @@ public class VisitController {
 	// Spring MVC calls method loadPetWithVisit(...) before initNewVisitForm is called
 	@GetMapping(value = "/owners/*/pets/{petId}/visits/new")
 	public String initNewVisitForm(@PathVariable("petId") int petId, Map<String, Object> model) {
+		Pet pet = this.petService.findPetById(petId);
+		Visit visit = new Visit();
+		pet.addVisit(visit);
+		model.put("visit", visit);
 		return "pets/createOrUpdateVisitForm";
 	}
 
 	// Spring MVC calls method loadPetWithVisit(...) before processNewVisitForm is called
 	@PostMapping(value = "/owners/{ownerId}/pets/{petId}/visits/new")
-	public String processNewVisitForm(@Valid Visit visit, BindingResult result) {
+	public String processNewVisitForm(@Valid Visit visit, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		}
 		else {
-			this.petService.saveVisit(visit);
+			this.visitService.saveVisit(visit);
 			return "redirect:/owners/{ownerId}";
 		}
 	}
 
 	@GetMapping(value = "/owners/*/pets/{petId}/visits")
-	public String showVisits(@PathVariable int petId, Map<String, Object> model) {
-		model.put("visits", this.petService.findPetById(petId).getVisits());
-		return "visitList";
-	}
+    public String showVisits(@PathVariable int petId, Map<String, Object> model) {
+        model.put("visits", this.petService.findPetById(petId).getVisits());
+        return "visitList";
+    }
 
+	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
+	public String deleteVisit(@PathVariable int ownerId, @PathVariable int petId,
+			@PathVariable int visitId, ModelMap model) throws DataAccessException, DuplicatedPetNameException {
+		Pet pet = this.petService.findPetById(petId);
+		Visit visit = this.visitService.findVisitById(visitId);
+		pet.deleteVisit((Visit)model.getAttribute("visit"));
+		pet.deleteVisit(visit);
+		this.petService.savePet(pet);
+		this.visitService.deleteVisit(this.visitService.findVisitById(visitId));
+		return "redirect:/owners/{ownerId}";
+	}
+	
 }
