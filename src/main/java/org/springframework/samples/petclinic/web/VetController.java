@@ -105,10 +105,11 @@ public class VetController {
 	}
 	
 	@PostMapping(value = "/vets/new")
-	public String processCreationForm(@Valid Vet vet, SpecialtyConstructor specialties, BindingResult result) {
+	public String processCreationForm(@Valid Vet vet, BindingResult result, SpecialtyConstructor specialties) {
 		if (result.hasErrors()) {
 			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
 		}
+		
 		else {
 			if (specialties!=null) {	
 				List<String> lsp = specialties.getSpecialties();
@@ -134,7 +135,7 @@ public class VetController {
 	}
 	
     @PostMapping(value = "/vets/{vetId}/edit")
-	public String processUpdateForm(@Valid Vet vet, SpecialtyConstructor specialties, BindingResult result,@PathVariable("vetId") int vetId) {
+	public String processUpdateForm(@Valid Vet vet, BindingResult result, SpecialtyConstructor specialties,@PathVariable("vetId") int vetId) {
 		if (result.hasErrors()) {
 			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
 		}
