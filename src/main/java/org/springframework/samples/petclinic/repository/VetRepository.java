@@ -64,6 +64,4 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	@Query("SELECT s FROM Specialty s WHERE s.name LIKE :name")
 	Optional<Specialty> findSpecialtyByName(@Param("name") String name);
 
-	Vet findById(int id) throws DataAccessException;
-
 }
