@@ -32,7 +32,7 @@ In the retrospective meeting, the team has a discussion about those results.
 
 ## Sprint Template
 
-| Day           | SERVANDO FIGUEROA    | ALEJANDRO FRAILE  | TOMAS GALERA     | HORACIO GARCIA     | ENRIQUE GONZALEZ     | VICTOR MONTESEIRIN     |
+| Day           | Servando    | Alejandro  | Tomás     | Horacio     | Enrique     | Victor     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
 | Day 1         |         |                |                |                |                |                |
 | Day 2         |               |                |                |                |                |                |
