@@ -1,4 +1,4 @@
-# Niko Niko Calendar of team X
+# Niko Niko Calendar of team G7-71
 ## Introduction
 Some interesting links about what a Niko Niko calendar is and opinions about its use in software development:
 
@@ -32,10 +32,10 @@ In the retrospective meeting, the team has a discussion about those results.
 
 ## Sprint Template
 
-| Day           | JAPAREJO    | Juanito  | [Member C]     | [Member D]     | [Member E]     | [Member F]     |
+| Day           | SERVANDO FIGUEROA    | ALEJANDRO FRAILE  | TOMAS GALERA     | HORACIO GARCIA     | ENRIQUE GONZALEZ     | VICTOR MONTESEIRIN     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
-| Day 1         | :smile:        |                |                |                |                |                |
-| Day 2         |               |    :smile:            |                |                |                |                |
-| Day 3         |               |    :worried:            |                |                |                |                |
-| Day 4         |  :neutral_face:             |               |                |                |                |                |
+| Day 1         |         |                |                |                |                |                |
+| Day 2         |               |                |                |                |                |                |
+| Day 3         |               |                |                |                |                |                |
+| Day 4         |               |               |                |                |                |                |
 ...
