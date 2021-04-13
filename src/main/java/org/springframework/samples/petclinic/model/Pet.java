@@ -50,6 +50,17 @@ public class Pet extends NamedEntity {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
+	@Column(name = "adoption")
+    private Boolean adoption;
+	
+	public Boolean getAdoption() {
+		return adoption;
+	}
+
+	public void setAdoption(Boolean adoption) {
+		this.adoption = adoption;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;
