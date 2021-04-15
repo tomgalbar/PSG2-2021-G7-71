@@ -20,6 +20,7 @@ public class Donation extends BaseEntity {
 	
 	public Donation() {
 		this.donationDate = LocalDate.now();
+		this.cause = new Cause();
 	}
 	
 	@Column(name = "client")
@@ -73,5 +74,4 @@ public class Donation extends BaseEntity {
 	public void setCause(Cause cause) {
 		this.cause = cause;
 	}
-	
 }

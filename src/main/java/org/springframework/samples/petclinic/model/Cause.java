@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.support.MutableSortDefinition;
@@ -21,6 +22,11 @@ import org.springframework.beans.support.PropertyComparator;
 @Entity
 @Table(name = "causes")
 public class Cause extends BaseEntity {
+	
+	public Cause() {
+		this.budgetAchieved= 0.0;
+		this.isClosed = false;
+	}
 	
 	@Column(name = "name")
 	@NotBlank(message = "El nombre no puede ser vacío")
@@ -42,10 +48,10 @@ public class Cause extends BaseEntity {
     @Size(min = 3, max = 50, message = "El nombre de la organizacion debe contener entre 3 y 50 caracteres")
 	private String organization;
 	
-//	@Column(name = "budget_achieved")
-//	@NotNull(message = "El objetivo acumulado de la causa no puede ser nulo")
-//	@Positive(message = "El objetivo acumulado de la causa debe ser superior a 0")
-//	private Double budgetAchieved;
+	@Column(name = "budget_achieved")
+	@NotNull(message = "El objetivo acumulado de la causa no puede ser nulo")
+	@PositiveOrZero(message = "El objetivo acumulado de la causa debe ser superior a 0")
+	private Double budgetAchieved;
 	
 	@Column(name = "is_closed")
 	@NotNull(message = "La causa debe estar abierta o cerrada")
@@ -85,15 +91,7 @@ public class Cause extends BaseEntity {
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
-
-//	public Double getBudgetAchieved() {
-//		return budgetAchieved;
-//	}
-//
-//	public void setBudgetAchieved(Double budgetAchieved) {
-//		this.budgetAchieved = budgetAchieved;
-//	}
-
+	
 	public Double getBudgetAchieved() {
 		List<Donation> ld = getDonations();
 		Double budgetAchieved = 0.0;
@@ -104,14 +102,6 @@ public class Cause extends BaseEntity {
 		
 		return budgetAchieved;
 	}
-
-//	public Boolean getIsClosed() {
-//		return isClosed;
-//	}
-//
-//	public void setIsClosed(Boolean isClosed) {
-//		this.isClosed = isClosed;
-//	}
 
 	public Boolean getIsClosed() {
 		Boolean isClosed = false;

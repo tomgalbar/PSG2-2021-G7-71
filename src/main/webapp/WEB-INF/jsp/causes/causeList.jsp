@@ -14,7 +14,7 @@
     <table id="causesTable" class="table table-striped">
         <thead>
         <tr>
-            <th><fmt:message key="name"/></th>
+            <th><fmt:message key="causeName"/></th>
             <th><fmt:message key="budgetAchieved"/></th>
             <th><fmt:message key="budgetTarget"/></th>
             <th><fmt:message key="donations"/></th>
@@ -25,30 +25,36 @@
         <c:forEach items="${causes}" var="cause">
             <tr>
                 <td>
-                    <c:out value="${cause.key.name}"/>
+                    <c:out value="${cause.name}"/>
                 </td>
                 <td>
-                    <c:out value="${cause.value}"/>
+                    <c:out value="${cause.budgetAchieved}"/>
                 </td>
                 
                 <td>
-                    <c:out value="${cause.key.budgetTarget}"/>
+                    <c:out value="${cause.budgetTarget}"/>
                 </td>
                 
-                <td>
-                    <c:out value="${cause.key.isClosed}"/>
-                </td>
-                
-                <td>
-                    <spring:url value="/causes/{causeId}/donations/new" var="donationUrl">
-                        <spring:param name="causeId" value="${cause.key.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(donationUrl)}"><fmt:message key="addDonation"/></a>
-                </td>
+				<c:choose>
+					<c:when test="${!cause.isClosed}">
+						<td>
+		                    <spring:url value="/causes/{causeId}/donations/new" var="donationUrl">
+		                        <spring:param name="causeId" value="${cause.id}"/>
+		                    </spring:url>
+		                    <a href="${fn:escapeXml(donationUrl)}"><fmt:message key="addDonation"/></a>
+	                	</td>
+	              	</c:when>
+	                
+	                <c:otherwise>
+	                	<td>
+		                    <span><b><fmt:message key="goalAchieved"/></b></span>
+	                	</td>
+					</c:otherwise>				
+				</c:choose>
                 
                 <td>
                     <spring:url value="/causes/{causeId}" var="causeUrl">
-                        <spring:param name="causeId" value="${cause.key.id}"/>
+                        <spring:param name="causeId" value="${cause.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(causeUrl)}"><fmt:message key="causeDetails"/></a>
                 </td>

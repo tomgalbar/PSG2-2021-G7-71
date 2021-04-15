@@ -12,5 +12,7 @@ public interface CauseRepository extends Repository<Cause, Integer>{
 	void delete(Cause cause);
 
 	List<Cause> findAll();
+	
+	Cause findById(Integer id);
 
 }

@@ -94,9 +94,10 @@ INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (2, 2, '20
 INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (3, 3, '2021-03-09','2021-03-16', 'Hotel FiveStars habitacion completa');
 INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (4, 4, '2021-03-11','2021-03-25', 'Hotel PetClinic habitacion doble y desayuno');
 
-INSERT INTO causes(id,name,description,budget_target,organization,is_closed) VALUES (1,'TEST', 'ESTO ES UN TEST', 300.99, 'TESTORG', FALSE);
-INSERT INTO causes(id,name,description,budget_target,organization,is_closed) VALUES (2,'PRUEBA', 'PRUEBA DE CAUSAS', 212.35, 'PRUEBAORG', FALSE);
-INSERT INTO causes(id,name,description,budget_target,organization,is_closed) VALUES (3,'CAUSA', 'DATOS DE PRUEBA', 124.43, 'ORGCAUSAS', FALSE);
-INSERT INTO causes(id,name,description,budget_target,organization,is_closed) VALUES (4,'TESTING', 'COMPROBACION DE FUNCIONAMIENTO', 1002.0, 'CAUSEDON', FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (1,'TEST', 'ESTO ES UN TEST', 300.99, 'TESTORG', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (2,'PRUEBA', 'PRUEBA DE CAUSAS', 212.35, 'PRUEBAORG', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (3,'CAUSA', 'DATOS DE PRUEBA', 124.43, 'ORGCAUSAS', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (4,'TESTING', 'COMPROBACION DE FUNCIONAMIENTO', 1002.0, 'CAUSEDON', 0.0,  FALSE);
 
-
+INSERT INTO donations(id,client,amount,donation_date,cause_id) VALUES (1,'pepe', 99.99, '2020-06-06', 1);
+INSERT INTO donations(id,client,amount,donation_date,cause_id) VALUES (2,'juan', 14.31, '2020-07-07', 2);
