@@ -9,11 +9,10 @@
 
     <h2><fmt:message key="causeInformation"/></h2>
 
-
     <table class="table table-striped">
         <tr>
             <th><fmt:message key="causeName"/></th>
-            <td><b><c:out value="${cause.name}"/></b></td>
+            <td><c:out value="${cause.name}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="causeDescription"/></th>
@@ -48,9 +47,6 @@
         </tr>
     </table>
     
-   
-
-    <br/>
     <br/>
     <br/>
 
@@ -66,20 +62,19 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${cause.donations}" var="donation">
-            <tr>
-                <td>
-                    <c:out value="${donation.client}"/>
-                </td>
-                <td>
-                    <c:out value="${donation.amount}"/>
-                </td>
-                
-                <td>
-                    <c:out value="${donation.donationDate}"/>
-                </td>   
-            </tr>
-        </c:forEach>
+	        <c:forEach items="${cause.donations}" var="donation">
+	            <tr>
+	                <td>
+	                    <c:out value="${donation.client}"/>
+	                </td>
+	                <td>
+	                    <c:out value="${donation.amount}"/>
+	                </td>
+	                <td>
+	                    <c:out value="${donation.donationDate}"/>
+	                </td>   
+	            </tr>
+	        </c:forEach>
         </tbody>
     </table>
 </petclinic:layout>

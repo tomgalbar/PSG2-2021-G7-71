@@ -34,12 +34,6 @@ public class CauseController {
 	@GetMapping(value = "/causes")
 	public String showCauses(Map<String, Object> model) {
 		List<Cause> lc = this.causeService.findAll();
-		
-//		Map<Cause,Double> causes = new HashMap<Cause, Double>();
-				
-//		for (Cause c: lc) {
-//			causes.put(c, c.getBudgetAchieved());
-//		}
 				
 		model.put("causes", lc);
 		return "causes/causeList";
