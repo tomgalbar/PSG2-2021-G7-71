@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -60,6 +61,14 @@ public class CauseController {
 			this.causeService.save(cause);			
 			return "redirect:/causes";
 		}
+	}
+	
+	
+	@GetMapping(value = "/causes/{causeId}")
+	public String showCauseDetails(@PathVariable("causeId") Integer causeId, Map<String, Object> model) {
+		Cause cause = this.causeService.findById(causeId);
+		model.put("cause", cause);
+		return "causes/causeDetails";
 	}
 	
 	
