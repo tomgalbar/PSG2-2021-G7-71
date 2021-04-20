@@ -2,7 +2,9 @@ package org.springframework.samples.petclinic.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,7 +60,7 @@ public class Cause extends BaseEntity {
 	private Boolean isClosed;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cause", fetch = FetchType.EAGER)
-	private List<Donation> donations;
+	private Set<Donation> donations;
 
 	public String getName() {
 		return name;
@@ -98,6 +100,7 @@ public class Cause extends BaseEntity {
 		
 		if(!ld.isEmpty() && ld !=null) {
 			budgetAchieved = ld.stream().mapToDouble(x->x.getAmount()).sum();
+			budgetAchieved = (double) Math.round(budgetAchieved*100)/100;
 		}
 		
 		return budgetAchieved;
@@ -111,19 +114,19 @@ public class Cause extends BaseEntity {
 		return isClosed;
 	}
 	
-	protected List<Donation> getDonationsInternal() {
+	protected Set<Donation> getDonationsInternal() {
 		if (this.donations == null) {
-			this.donations = new ArrayList<Donation>();
+			this.donations = new HashSet<>();
 		}
 		return this.donations;
 	}
 	
-	protected void setDonationsInternal(List<Donation> donations) {
+	protected void setDonationsInternal(Set<Donation> donations) {
 		this.donations = donations;
 	}
 	
 	public List<Donation> getDonations() {
-		List<Donation> sortedDonations = new ArrayList<Donation>(getDonationsInternal());
+		List<Donation> sortedDonations = new ArrayList<>(getDonationsInternal());
 		PropertyComparator.sort(sortedDonations, new MutableSortDefinition("donationDate", false, false));
 		return Collections.unmodifiableList(sortedDonations);
 	}
