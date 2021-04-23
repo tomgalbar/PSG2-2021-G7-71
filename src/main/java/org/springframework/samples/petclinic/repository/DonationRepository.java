@@ -12,5 +12,7 @@ public interface DonationRepository extends Repository<Donation, Integer>{
 	void delete(Donation cause);
 
 	List<Donation> findAll();
+
+	Donation findById(Integer id);
 	
 }

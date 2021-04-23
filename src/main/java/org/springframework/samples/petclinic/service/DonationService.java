@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Donation;
@@ -20,6 +22,14 @@ private DonationRepository donationRepository;
 	@Transactional
 	public void save(Donation donation) throws DataAccessException{
 		donationRepository.save(donation);
+	}
+	
+	public List<Donation> findAll() throws DataAccessException{
+		return this.donationRepository.findAll();
+	}
+
+	public Object findById(Integer id) throws DataAccessException{
+		return this.donationRepository.findById(id);
 	}
 
 }
