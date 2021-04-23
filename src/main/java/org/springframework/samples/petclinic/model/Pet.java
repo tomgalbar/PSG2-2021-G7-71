@@ -27,6 +27,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -45,10 +46,18 @@ import java.util.Set;
 @Entity
 @Table(name = "pets")
 public class Pet extends NamedEntity {
+	
+	public Pet() {
+		this.inAdoption=false;
+	}
 
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
+	
+	@Column(name = "in_adoption")
+	@NotNull
+	private Boolean inAdoption;
 
 	@ManyToOne
 	@JoinColumn(name = "type_id")
@@ -57,13 +66,24 @@ public class Pet extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
 	private Owner owner;
-	
+		
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pet", fetch = FetchType.EAGER)
 	private Set<Visit> visits;
 	
 	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Booking> bookings;
+	private Set<Booking> bookings;
+	
+	@OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+	private List<AdoptionApplication> adoptionApplications;
 
+	public List<AdoptionApplication> getAdoptionApplications() {
+		return adoptionApplications;
+	}
+
+	public void setAdoptionApplications(List<AdoptionApplication> adoptionApplications) {
+		this.adoptionApplications = adoptionApplications;
+	}
+  
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
@@ -84,7 +104,7 @@ public class Pet extends NamedEntity {
 		return this.owner;
 	}
 
-	protected void setOwner(Owner owner) {
+	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
 
@@ -115,19 +135,19 @@ public class Pet extends NamedEntity {
 		visit.setPet(this);
 	}
 
-	protected List<Booking> getBookingsInternal() {
+	protected Set<Booking> getBookingsInternal() {
 		if (this.bookings == null) {
-			this.bookings = new ArrayList<>();
+			this.bookings = new HashSet<>();
 		}
 		return this.bookings;
 	}
 	
-	protected void setBookingsInternal(List<Booking> bookings) {
+	protected void setBookingsInternal(Set<Booking> bookings) {
 		this.bookings = bookings;
 	}
 	
 	public List<Booking> getBookings() {
-		List<Booking> sortedBookings = new ArrayList<Booking>(getBookingsInternal());
+		List<Booking> sortedBookings = new ArrayList<>(getBookingsInternal());
 		PropertyComparator.sort(sortedBookings, new MutableSortDefinition("startDate", false, false));
 		return Collections.unmodifiableList(sortedBookings);
 	}
@@ -142,4 +162,12 @@ public class Pet extends NamedEntity {
 		booking.setPet(this);
 	}
 
+	public Boolean getInAdoption() {
+		return inAdoption;
+	}
+
+	public void setInAdoption(Boolean inAdoption) {
+		this.inAdoption = inAdoption;
+	}
+	
 }

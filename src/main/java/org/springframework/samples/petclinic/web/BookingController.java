@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.BookingService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
@@ -28,6 +27,8 @@ public class BookingController {
 	private final PetService petService;
 	
 	private final BookingService bookingService;
+	
+	private static final String VIEWS_BOOKING_CREATE_OR_UPDATE_FORM = "pets/createOrUpdateBookingForm";
 	
 	@Autowired
 	public BookingController(PetService petService,
@@ -52,7 +53,7 @@ public class BookingController {
 	// Spring MVC calls method loadPetWithBooking(...) before initNewBookingForm is called
 	@GetMapping(value = "/owners/*/pets/{petId}/bookings/new")
 	public String initNewBookingForm(@PathVariable("petId") int petId, Map<String, Object> model) {
-		return "pets/createOrUpdateBookingForm";
+		return VIEWS_BOOKING_CREATE_OR_UPDATE_FORM;
 	}
 	
 	// Spring MVC calls method loadPetWithBooking(...) before processNewBookingForm is called
@@ -61,20 +62,20 @@ public class BookingController {
 		
 		//Primero se comprueban si hay errores para @Valid (entidad y sus anotaciones)
 		if (result.hasErrors()) {
-			return "pets/createOrUpdateBookingForm";
+			return VIEWS_BOOKING_CREATE_OR_UPDATE_FORM;
 		}
 		
 		//Comprobacion para la coherencia de las fechas
 		if(booking.getStartDate().isAfter(booking.getFinishDate())) {
 			result.rejectValue("finishDate", "startDateAfterFinishDate", "La fecha de fin no puede ser anterior a la de inicio");
-			return "pets/createOrUpdateBookingForm";
+			return VIEWS_BOOKING_CREATE_OR_UPDATE_FORM;
 		}
 		
 		//Comprobacion para ver si hay mas de 1 reserva dentro de un mismo periodo de tiempo
 		Boolean duplicated = petService.duplicatedBooking(booking);
-		if(duplicated) {
+		if(Boolean.TRUE.equals(duplicated)) {
 			result.rejectValue("finishDate", "duplicatedBooking", "Ya dispone de una reserva en dicho periodo de tiempo");
-			return "pets/createOrUpdateBookingForm";
+			return VIEWS_BOOKING_CREATE_OR_UPDATE_FORM;
 		}
 
 		else {

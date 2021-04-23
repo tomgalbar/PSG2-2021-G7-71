@@ -32,8 +32,8 @@ class BookingControllerTests {
 	private static final int TEST_PET_ID = 1;
 	private static final int TEST_BOOKING_ID = 1;
 
-	@Autowired
-	private BookingController bookingController;
+//	@Autowired
+//	private BookingController bookingController;
 	
 	@MockBean
 	private PetService petService;

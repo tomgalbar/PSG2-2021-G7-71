@@ -70,19 +70,24 @@ INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '
 INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner9');
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner10');
 
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17', 2, 3);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07', 2, 3);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30', 3, 4);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (6, 'George', '2010-01-20', 4, 5);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (7, 'Samantha', '2012-09-04', 1, 6);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (8, 'Max', '2012-09-04', 1, 6);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (9, 'Lucky', '2011-08-06', 5, 7);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (10, 'Mulligan', '2007-02-24', 2, 8);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (11, 'Freddy', '2010-03-09', 5, 9);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24', 2, 10);
-INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08', 1, 10);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', FALSE, 1, 1);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', TRUE, 6, 2);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17', TRUE, 2, 3);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (4, 'Jewel', '2010-03-07', FALSE, 2, 3);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (5, 'Iggy', '2010-11-30', TRUE, 3, 4);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (6, 'George', '2010-01-20', FALSE, 4, 5);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (7, 'Samantha', '2012-09-04', FALSE, 1, 6);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (8, 'Max', '2012-09-04', FALSE, 1, 6);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (9, 'Lucky', '2011-08-06', FALSE, 5, 7);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (10, 'Mulligan', '2007-02-24', TRUE, 2, 8);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (11, 'Freddy', '2010-03-09', FALSE, 5, 9);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24', TRUE, 2, 10);
+INSERT INTO pets(id,name,birth_date,in_adoption,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08', FALSE, 1, 10);
+
+INSERT INTO adoption_application(description, owner_id, pet_id) VALUES ('ESTO ES UNA ADOPCION DE PRUEBA', 1,2);
+INSERT INTO adoption_application(description, owner_id, pet_id) VALUES ('ESTO ES OTRA ADOPCION DE PRUEBA', 1,5);
+INSERT INTO adoption_application(description, owner_id, pet_id) VALUES ('LO CUIDARE MUY BIEN', 2,10);
+
 
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
@@ -94,3 +99,10 @@ INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (2, 2, '20
 INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (3, 3, '2021-03-09','2021-03-16', 'Hotel FiveStars habitacion completa');
 INSERT INTO bookings(id,pet_id,start_date,finish_date,details) VALUES (4, 4, '2021-03-11','2021-03-25', 'Hotel PetClinic habitacion doble y desayuno');
 
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (1,'TEST', 'ESTO ES UN TEST', 300.99, 'TESTORG', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (2,'PRUEBA', 'PRUEBA DE CAUSAS', 212.35, 'PRUEBAORG', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (3,'CAUSA', 'DATOS DE PRUEBA', 124.43, 'ORGCAUSAS', 0.0, FALSE);
+INSERT INTO causes(id,name,description,budget_target,organization,budget_achieved,is_closed) VALUES (4,'TESTING', 'COMPROBACION DE FUNCIONAMIENTO', 1002.0, 'CAUSEDON', 0.0,  FALSE);
+
+INSERT INTO donations(id,client,amount,donation_date,cause_id) VALUES (1,'pepe', 99.99, '2020-06-06', 1);
+INSERT INTO donations(id,client,amount,donation_date,cause_id) VALUES (2,'juan', 14.31, '2020-07-07', 2);

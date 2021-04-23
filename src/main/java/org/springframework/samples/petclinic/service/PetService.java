@@ -79,7 +79,8 @@ public class PetService {
 		this.petRepository.delete(pet);
 	}
   
-	public Collection<Visit> findVisitsByPetId(int petId) {
+	@Transactional(readOnly = true)
+	public Collection<Visit> findVisitsByPetId(int petId) throws DataAccessException{
 		return visitRepository.findByPetId(petId);
 	}
 	
@@ -88,13 +89,15 @@ public class PetService {
 		bookingRepository.save(booking);
 	}
 	
-	public List<Booking> findBookingsByPetId(int petId){
+	@Transactional(readOnly = true)
+	public List<Booking> findBookingsByPetId(int petId) throws DataAccessException{
 		return bookingRepository.findByPetId(petId);
 	}
 	
 	//Funcion para comprobar si hay mas de una reserva en un mismo periodo de tiempo
+	@Transactional(readOnly = true)
 	public Boolean duplicatedBooking(Booking booking) {
-		List<Booking> lb = findBookingsByPetId(booking.getPet().getId());
+		List<Booking> lb = bookingRepository.findByPetId(booking.getPet().getId());
 		LocalDate inicioN = booking.getStartDate();
 		LocalDate finN = booking.getFinishDate();
 		Boolean duplicated = false;

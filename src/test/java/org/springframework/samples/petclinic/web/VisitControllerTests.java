@@ -18,9 +18,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
-import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.samples.petclinic.service.VisitService;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,8 +37,8 @@ class VisitControllerTests {
 	private static final int TEST_PET_ID = 1;
 	private static final int TEST_VISIT_ID = 1;
 
-	@Autowired
-	private VisitController visitController;
+//	@Autowired
+//	private VisitController visitController;
 
 	@MockBean
 	private PetService clinicService;

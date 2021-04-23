@@ -8,7 +8,7 @@ public class SpecialtyConstructor {
 	private List<String> specialties;
 	
 	public SpecialtyConstructor() {
-		this.specialties = new ArrayList<String>();
+		this.specialties = new ArrayList<>();
 	}
 	
 	public SpecialtyConstructor(List<String> specialties){

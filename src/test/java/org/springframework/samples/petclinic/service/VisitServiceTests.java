@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class VisitServiceTests {
+class VisitServiceTests {
 
 	@Autowired
 	protected VisitService visitService;
@@ -28,7 +28,7 @@ public class VisitServiceTests {
 		pet.deleteVisit(visit);
 		this.visitService.deleteVisit(visit);
 		Visit visitDeleted = this.visitService.findVisitById(4);
-		assertThat(visitDeleted).isEqualTo(null);
+		assertThat(visitDeleted).isNull();
 	}
 	
 }

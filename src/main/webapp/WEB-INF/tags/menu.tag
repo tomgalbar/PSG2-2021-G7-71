@@ -29,28 +29,38 @@
 					<span><fmt:message key="home"/></span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="buscar propietario">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span><fmt:message key="findOwner"/></span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarios">
+				<sec:authorize access="hasAnyAuthority('admin', 'owner')">
+					<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
+						title="buscar propietario">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						<span><fmt:message key="findOwner"/></span>
+					</petclinic:menuItem>
+				</sec:authorize>
+				
+				<sec:authorize access="isAuthenticated()">
+					<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
+						title="veterinarios">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span><fmt:message key="veterinarians"/></span>
+					</petclinic:menuItem>
+				</sec:authorize>
+				
+				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
+					title="causas">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span><fmt:message key="veterinarians"/></span>
+					<span><fmt:message key="causes"/></span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="error">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span><fmt:message key="eerror"/></span>
-				</petclinic:menuItem>
+				
+				<sec:authorize access="hasAnyAuthority('admin', 'owner')">
+					<petclinic:menuItem active="${name eq 'adoptions'}" url="/petsInAdoption"
+						title="adoptions">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span><fmt:message key="Adoptions"/></span>
+					</petclinic:menuItem>
+				</sec:authorize>
 
 			</ul>
-
-
-
+			
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">

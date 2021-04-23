@@ -30,14 +30,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
@@ -75,13 +72,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class PetServiceTests {        
-        @Autowired
+    
+	@Autowired
 	protected PetService petService;
         
-        @Autowired
-    	protected VisitService visitService;
+    @Autowired
+	protected VisitService visitService;
         
-        @Autowired
+    @Autowired
 	protected OwnerService ownerService;	
 
 	@Test
@@ -104,7 +102,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertPetIntoDatabaseAndGenerateId() {
+	void shouldInsertPetIntoDatabaseAndGenerateId() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		int found = owner6.getPets().size();
 
@@ -131,7 +129,7 @@ class PetServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldThrowExceptionInsertingPetsWithTheSameName() {
+	void shouldThrowExceptionInsertingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		Pet pet = new Pet();
 		pet.setName("wario");
@@ -158,7 +156,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldUpdatePetName() throws Exception {
+	void shouldUpdatePetName() throws Exception {
 		Pet pet7 = this.petService.findPetById(7);
 		String oldName = pet7.getName();
 
@@ -172,7 +170,7 @@ class PetServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldThrowExceptionUpdatingPetsWithTheSameName() {
+	void shouldThrowExceptionUpdatingPetsWithTheSameName() {
 		Owner owner6 = this.ownerService.findOwnerById(6);
 		Pet pet = new Pet();
 		pet.setName("wario");
@@ -203,7 +201,7 @@ class PetServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldAddNewVisitForPet() {
+	void shouldAddNewVisitForPet() {
 		Pet pet7 = this.petService.findPetById(7);
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();
@@ -224,7 +222,7 @@ class PetServiceTests {
 	@Test
 	void shouldFindVisitsByPetId() throws Exception {
 		Collection<Visit> visits = this.visitService.findVisitsByPetId(7);
-		assertThat(visits.size()).isEqualTo(2);
+		assertThat(visits).hasSize(2);
 		Visit[] visitArr = visits.toArray(new Visit[visits.size()]);
 		assertThat(visitArr[0].getPet()).isNotNull();
 		assertThat(visitArr[0].getDate()).isNotNull();
@@ -237,7 +235,7 @@ class PetServiceTests {
 		Pet pet = this.petService.findPetById(1);
 		this.petService.deletePet(pet);
 		Pet petDeleted = this.petService.findPetById(1);
-		assertThat(petDeleted).isEqualTo(null);
+		assertThat(petDeleted).isNull();
 	}
 		
 	@Test

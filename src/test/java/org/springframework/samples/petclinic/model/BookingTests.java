@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-public class BookingTests {
+class BookingTests {
 	
 	private Validator createValidator() {
 		LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
@@ -37,7 +37,7 @@ public class BookingTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Booking> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("details");
+		assertThat(violation.getPropertyPath()).hasToString("details");
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class BookingTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Booking> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("startDate");
+		assertThat(violation.getPropertyPath()).hasToString("startDate");
 	}
 	
 	@Test
@@ -75,7 +75,7 @@ public class BookingTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Booking> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("finishDate");
+		assertThat(violation.getPropertyPath().toString()).hasToString("finishDate");
 	}
 	
 }
