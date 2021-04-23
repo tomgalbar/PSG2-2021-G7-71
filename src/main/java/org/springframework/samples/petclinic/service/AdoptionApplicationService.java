@@ -27,11 +27,6 @@ public class AdoptionApplicationService {
 		adoptionApplicationRepository.save(adoptionApplication);
 	}
 	
-	@Transactional
-	public void delete(AdoptionApplication adoptionApplication) {
-		adoptionApplicationRepository.delete(adoptionApplication);
-	}
-	
 	public List<Pet> findByInAdoption(){
 		return petRepository.findByInAdoption();
 	}
