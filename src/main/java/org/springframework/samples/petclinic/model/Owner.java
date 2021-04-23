@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -69,6 +70,17 @@ public class Owner extends Person {
 	private User user;
 	//
 	
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<AdoptionApplication> adoptionApplications;
+	
+	public List<AdoptionApplication> getAdoptionApplications() {
+		return adoptionApplications;
+	}
+
+	public void setAdoptionApplications(List<AdoptionApplication> adoptionApplications) {
+		this.adoptionApplications = adoptionApplications;
+	}
+
 	public String getAddress() {
 		return this.address;
 	}

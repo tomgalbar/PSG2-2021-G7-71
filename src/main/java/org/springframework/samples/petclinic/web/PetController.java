@@ -134,7 +134,7 @@ public class PetController {
 		}
 		else {
                         Pet petToUpdate=this.petService.findPetById(petId);
-			BeanUtils.copyProperties(pet, petToUpdate, "id","owner","visits");                                                                                  
+			BeanUtils.copyProperties(pet, petToUpdate, "id","owner","visits","inAdoption");                                                                                  
                     try {                    
                         this.petService.savePet(petToUpdate);                    
                     } catch (DuplicatedPetNameException ex) {

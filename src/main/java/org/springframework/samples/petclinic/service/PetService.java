@@ -88,6 +88,7 @@ public class PetService {
 		bookingRepository.save(booking);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Booking> findBookingsByPetId(int petId){
 		return bookingRepository.findByPetId(petId);
 	}

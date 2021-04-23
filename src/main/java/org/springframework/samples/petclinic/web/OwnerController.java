@@ -16,15 +16,23 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.VetService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +53,13 @@ public class OwnerController {
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
 	private final OwnerService ownerService;
+	
+	private final UserService userService;
 
 	@Autowired
-	public OwnerController(OwnerService ownerService, UserService userService, AuthoritiesService authoritiesService) {
+	public OwnerController(OwnerService ownerService, UserService userService) {
 		this.ownerService = ownerService;
+		this.userService = userService;
 	}
 
 	@InitBinder
@@ -145,7 +156,27 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-		mav.addObject(this.ownerService.findOwnerById(ownerId));
+		mav.addObject("owner",this.ownerService.findOwnerById(ownerId));
+		
+		Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User usuario = this.userService.findUser(userDetail.getUsername()).get();
+        Owner owner = ownerService.findByUser(usuario);
+		
+        Set<Authorities> setAU = usuario.getAuthorities();
+        List<String> authorities = setAU.stream().map(x->x.getAuthority()).collect(Collectors.toList());
+        Boolean esAdmin = authorities.contains("admin");
+        
+        Boolean fullAccess = false;
+        
+        if(esAdmin || (owner!=null && owner.getId()==ownerId)) {
+        	fullAccess= true;
+        }
+		
+    	mav.addObject("fullAccess", fullAccess);
+        
 		return mav;
 	}
 

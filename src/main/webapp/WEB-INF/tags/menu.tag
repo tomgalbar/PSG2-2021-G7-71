@@ -41,10 +41,10 @@
 					<span><fmt:message key="veterinarians"/></span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="error">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span><fmt:message key="eerror"/></span>
+				<petclinic:menuItem active="${name eq 'adoptions'}" url="/petsInAdoption"
+					title="adoptions">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span><fmt:message key="Adoptions"/></span>
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
