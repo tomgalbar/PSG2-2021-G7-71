@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class AdoptionApplicationServiceTests {
+class AdoptionApplicationServiceTests {
 
 	@Autowired
 	private AdoptionApplicationService adoptionApplicationService;
@@ -81,7 +81,6 @@ public class AdoptionApplicationServiceTests {
 	void shouldFindByPet() {
 		List<AdoptionApplication> adopt = adoptionApplicationService.findByPet(3);
 		assertNotNull(adopt);
-		
 	}
 	
 	@Test

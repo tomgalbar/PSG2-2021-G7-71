@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Booking;
 import org.springframework.samples.petclinic.repository.BookingRepository;
 import org.springframework.stereotype.Service;
@@ -19,17 +20,17 @@ public class BookingService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Booking> findBookingsByPetId(Integer id){
+	public List<Booking> findBookingsByPetId(Integer id) throws DataAccessException{
 		return bookingRepository.findByPetId(id);
 	}
 	
 	@Transactional(readOnly = true)
-	public Booking findBookingById(Integer id){
+	public Booking findBookingById(Integer id) throws DataAccessException{
 		return bookingRepository.findById(id);
 	}
 	
 	@Transactional
-	public void deleteBooking(Booking booking) {
+	public void deleteBooking(Booking booking) throws DataAccessException{
 		this.bookingRepository.delete(booking);
 	}
 

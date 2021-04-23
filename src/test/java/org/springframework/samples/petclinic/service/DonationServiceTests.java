@@ -16,10 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class DonationServiceTests {
-	
+class DonationServiceTests {
 
-	
 	@Autowired
 	protected DonationService donationService;
 	
@@ -28,7 +26,7 @@ public class DonationServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldInsertDonation() {
+	void shouldInsertDonation() {
 		Collection<Donation> donations = this.donationService.findAll();
 		int found = donations.size();
 		

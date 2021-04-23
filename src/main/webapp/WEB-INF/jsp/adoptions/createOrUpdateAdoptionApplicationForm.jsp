@@ -14,7 +14,7 @@
 		<div class="form-group has-feedback">
 			<fmt:message var="descriptionOfCare" key="descriptionOfCare"/>
 			<petclinic:inputField label="${descriptionOfCare}" name="description" />
-			<input type="hidden" name="ownerId" value="${adoptionApplication.owner.id}">
+			<input type="hidden" name="ownerId" value="${adoptionApplication.owner.id==null?ownerId:adoptionApplication.owner.id}">
 			
 		</div>
 		<div class="form-group">

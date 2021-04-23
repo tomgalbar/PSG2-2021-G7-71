@@ -25,7 +25,7 @@ public class CauseController {
 	public CauseController(CauseService causeService) {
 		this.causeService = causeService;
 	}
-	
+
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");

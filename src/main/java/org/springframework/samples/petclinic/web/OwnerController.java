@@ -27,9 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
-import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -157,7 +155,13 @@ public class OwnerController {
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		mav.addObject("owner",this.ownerService.findOwnerById(ownerId));
-		
+    	mav.addObject("fullAccess", fullAccess(ownerId));
+        
+		return mav;
+	}
+	
+	//METODO PARA COMPROBAR QUE CADA OWNER SOLO EDITE SU PROPIA PAGINA
+	private Boolean fullAccess(int ownerId) {
 		Authentication auth = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
@@ -174,10 +178,8 @@ public class OwnerController {
         if(esAdmin || (owner!=null && owner.getId()==ownerId)) {
         	fullAccess= true;
         }
-		
-    	mav.addObject("fullAccess", fullAccess);
         
-		return mav;
+        return fullAccess;
 	}
 
 }

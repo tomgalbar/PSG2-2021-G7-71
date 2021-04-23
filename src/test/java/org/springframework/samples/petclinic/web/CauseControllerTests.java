@@ -33,8 +33,8 @@ public class CauseControllerTests {
 	private static final int TEST_CAUSE_ID = 1;
 	private static final int TEST_DONATION_ID = 1;
 	
-	@Autowired
-	private CauseController causeController;
+//	@Autowired
+//	private CauseController causeController;
 	
 	@MockBean
 	private DonationService donationService;

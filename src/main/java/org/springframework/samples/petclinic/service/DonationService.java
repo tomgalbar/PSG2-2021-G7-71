@@ -24,11 +24,13 @@ private DonationRepository donationRepository;
 		donationRepository.save(donation);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<Donation> findAll() throws DataAccessException{
 		return this.donationRepository.findAll();
 	}
-
-	public Object findById(Integer id) throws DataAccessException{
+	
+	@Transactional(readOnly = true)
+	public Donation findById(Integer id) throws DataAccessException{
 		return this.donationRepository.findById(id);
 	}
 

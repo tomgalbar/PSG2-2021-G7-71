@@ -56,13 +56,7 @@ public class AdoptionApplicationController {
 		
 		List<Pet> petsInAdoption = this.adoptionApplicationService.findByInAdoption();
 		
-		Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-        UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        User usuario = this.userService.findUser(userDetail.getUsername()).get();
-		
-        Owner owner = ownerService.findByUser(usuario);
+        Owner owner = findOwnerLoggedIn();
         
         List<Pet> petsOwner = new ArrayList<Pet>();
         
@@ -77,7 +71,7 @@ public class AdoptionApplicationController {
 		model.put("pets", petsInAdoption);
 		model.put("currentApplications", petsOwner);
 		
-		return "/adoptions/petsInAdoption";
+		return "adoptions/petsInAdoption";
 	}
 	
 	@GetMapping(value = "/petsInAdoption/setPetAdoption/{petId}")
@@ -124,16 +118,10 @@ public class AdoptionApplicationController {
 	@GetMapping(value = "/petsInAdoption/adoptionRequest/new/{petId}")
 	public String initNewAdoptionApplicationForm(@PathVariable("petId") Integer petId, ModelMap model) {
 		
-		AdoptionApplication adoptionApplication = new AdoptionApplication();
+		AdoptionApplication adoptionApplication = new AdoptionApplication();		
 		adoptionApplication.setPet(petService.findPetById(petId));
 		
-		Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-        UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        User usuario = this.userService.findUser(userDetail.getUsername()).get();
-		
-        Owner owner = ownerService.findByUser(usuario);
+        Owner owner = findOwnerLoggedIn();
         
         adoptionApplication.setOwner(owner);
         
@@ -143,19 +131,31 @@ public class AdoptionApplicationController {
 	}
 	
 	@PostMapping(value = "/petsInAdoption/adoptionRequest/new/{petId}")
-	public String processCreationNewAdoptionApplicationForm(@Valid AdoptionApplication adoptionApplication, BindingResult result, @PathVariable("petId") Integer petId, Integer ownerId) {
+	public String processCreationNewAdoptionApplicationForm(@Valid AdoptionApplication adoptionApplication, BindingResult result, @PathVariable("petId") Integer petId, Integer ownerId, ModelMap model) {
 				
 		if(result.hasErrors()) {
+			model.put("ownerId", ownerId);
 			return "adoptions/createOrUpdateAdoptionApplicationForm";
 		}
 		
-		else {
+		else {	
 			adoptionApplication.setPet(petService.findPetById(petId));
 			adoptionApplication.setOwner(ownerService.findOwnerById(ownerId));
 			
 			this.adoptionApplicationService.save(adoptionApplication);
 			return "redirect:/petsInAdoption";
 		}
+	}
+	
+	private Owner findOwnerLoggedIn() {
+		Authentication auth = SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User usuario = this.userService.findUser(userDetail.getUsername()).get();
+		
+        Owner owner = ownerService.findByUser(usuario);
+        return owner;
 	}
 	
 	

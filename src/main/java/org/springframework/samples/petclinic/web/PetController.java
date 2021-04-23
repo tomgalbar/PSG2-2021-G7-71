@@ -45,12 +45,12 @@ public class PetController {
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
 
 	private final PetService petService;
-        private final OwnerService ownerService;
+    private final OwnerService ownerService;
 
 	@Autowired
 	public PetController(PetService petService, OwnerService ownerService) {
 		this.petService = petService;
-                this.ownerService = ownerService;
+        this.ownerService = ownerService;
 	}
 
 	@ModelAttribute("types")
@@ -62,17 +62,7 @@ public class PetController {
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
 	}
-        
-        /*@ModelAttribute("pet")
-	public Pet findPet(@PathVariable("petId") Integer petId) {
-            Pet result=null;
-		if(petId!=null)
-                    result=this.clinicService.findPetById(petId);
-                else
-                    result=new Pet();
-            return result;
-	}*/
-                
+                        
 	@InitBinder("owner")
 	public void initOwnerBinder(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
