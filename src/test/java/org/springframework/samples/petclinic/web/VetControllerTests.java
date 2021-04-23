@@ -38,8 +38,8 @@ class VetControllerTests {
 
 	private static final int TEST_Vet_ID = 2;
 
-	@Autowired
-	private VetController vetController;
+//	@Autowired
+//	private VetController vetController;
 
 	@MockBean
 	private VetService clinicService;

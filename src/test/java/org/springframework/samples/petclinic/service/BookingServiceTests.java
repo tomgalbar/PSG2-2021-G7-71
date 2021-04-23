@@ -21,7 +21,8 @@ class BookingServiceTests {
 	@Autowired
 	protected BookingService bookingService;
 	
-	@Autowired PetService petService;
+	@Autowired 
+	PetService petService;
 	
 	@Test
 	void shouldFindBookingsByPetId() {
@@ -40,11 +41,11 @@ class BookingServiceTests {
 		pet.deleteBooking(booking);
 		this.bookingService.deleteBooking(booking);
 		Booking bookingDeleted = this.bookingService.findBookingById(2);
-		assertThat(bookingDeleted).isEqualTo(null);
+		assertThat(bookingDeleted).isNull();
 	}
 	
 
-@Test//Inicio:'2021-03-09', Fin:'2021-03-16' (en la base de datos)
+	@Test//Inicio:'2021-03-09', Fin:'2021-03-16' (en la base de datos)
 	@Transactional
 	void shouldNotSaveBookingIdentico() {
 		Pet pet = this.petService.findPetById(3);

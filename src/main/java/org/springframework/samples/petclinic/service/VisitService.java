@@ -35,7 +35,7 @@ public class VisitService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Visit> findVisitsByPetId(int petId) {
+	public Collection<Visit> findVisitsByPetId(int petId) throws DataAccessException{
 		return visitRepository.findByPetId(petId);
 	}
 	

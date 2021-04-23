@@ -17,30 +17,14 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
-import org.springframework.samples.petclinic.model.Visit;
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -94,11 +78,11 @@ class VetServiceTests {
 		Vet vet = this.vetService.findVetById(1);
 		assertThat(vet.getLastName()).startsWith("Carter");
 		assertThat(vet.getFirstName()).startsWith("James");
-		assertThat(vet.getNrOfSpecialties()).isEqualTo(0);
+		assertThat(vet.getNrOfSpecialties()).isZero();
 	}
 	@Test
 	@Transactional
-	public void shouldInsertvet() {
+	void shouldInsertvet() {
 		Vet vet = this.vetService.findVetById(2);
 		Collection<Vet> vets = this.vetService.findVets();
 		int found = vets.size();
@@ -108,10 +92,10 @@ class VetServiceTests {
 		vet2.addSpecialty(vet.getSpecialties().get(0));
                 
 		this.vetService.saveVet(vet2);
-		assertThat(vet2.getId().longValue()).isNotEqualTo(0);
+		assertThat(vet2.getId().longValue()).isNotZero();
 
 		Collection<Vet> vets2 = this.vetService.findVets();
-		assertThat(vets2.size()).isEqualTo(found+1);
+		assertThat(vets2).hasSize(found+1);
 	}
 	@Test
 	@Transactional
@@ -134,7 +118,7 @@ class VetServiceTests {
 		Vet vet = this.vetService.findVetById(1);
 		this.vetService.deleteVet(vet);
 		Vet vetDeleted = this.vetService.findVetById(1);
-		assertThat(vetDeleted).isEqualTo(null);
+		assertThat(vetDeleted).isNull();
 	}
 
 }

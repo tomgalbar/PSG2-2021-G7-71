@@ -16,10 +16,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
@@ -54,14 +51,14 @@ public interface VetRepository extends Repository<Vet, Integer>{
 
 	@Modifying
 	@Query(value = "DELETE FROM VET_SPECIALTIES WHERE VET_ID = ?1", nativeQuery = true)
-	void deleteVetSpecialityUnion(@Param("vetId") Integer vetId);
+	void deleteVetSpecialityUnion(@Param("vetId") Integer vetId) throws DataAccessException;
 
-	void save(Vet vet)throws DataAccessException;
+	void save(Vet vet) throws DataAccessException;
 
 	@Query("SELECT s FROM Specialty s")
-	Collection<Specialty> findAllSpecialties();
+	Collection<Specialty> findAllSpecialties() throws DataAccessException;
 	
 	@Query("SELECT s FROM Specialty s WHERE s.name LIKE :name")
-	Optional<Specialty> findSpecialtyByName(@Param("name") String name);
+	Optional<Specialty> findSpecialtyByName(@Param("name") String name) throws DataAccessException;
 
 }
