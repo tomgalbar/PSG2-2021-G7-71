@@ -23,6 +23,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
@@ -81,8 +82,10 @@ public class OwnerService {
 	public void deleteOwner(Owner owner) throws DataAccessException {
 		//deleting owner
 		ownerRepository.delete(owner);	
-
-			
 	}	
+	
+	public Owner findByUser(User user) {
+		return ownerRepository.findByUser(user);
+	}
 
 }
