@@ -58,14 +58,14 @@ public class AdoptionApplicationController {
 		
         Owner owner = findOwnerLoggedIn();
         
-        List<Pet> petsOwner = new ArrayList<Pet>();
+        List<Pet> petsOwner = new ArrayList<>();
         
-        if(owner!=null) {
+        if(owner.getId()!=null) {
         	petsInAdoption= petsInAdoption.stream().filter(x->!x.getOwner().equals(owner)).collect(Collectors.toList());
     		
     		List<AdoptionApplication> ownerApplications = owner.getAdoptionApplications();
     		
-    		petsOwner = ownerApplications.stream().map(x->x.getPet()).collect(Collectors.toList());
+    		petsOwner = ownerApplications.stream().map(AdoptionApplication::getPet).collect(Collectors.toList());
         }
         
 		model.put("pets", petsInAdoption);
@@ -102,7 +102,7 @@ public class AdoptionApplicationController {
 		
 		petToChange.setInAdoption(false);
 		List<AdoptionApplication> la = petToChange.getAdoptionApplications();
-		petToChange.setAdoptionApplications(new ArrayList<AdoptionApplication>());
+		petToChange.setAdoptionApplications(new ArrayList<>());
 		adoptionApplicationService.deleteAll(la);
 		
 		Owner newOwner = ownerService.findOwnerById(ownerId);
@@ -122,12 +122,15 @@ public class AdoptionApplicationController {
 		adoptionApplication.setPet(petService.findPetById(petId));
 		
         Owner owner = findOwnerLoggedIn();
+        String url = "welcome";
+
+        if(owner.getId()!=null) {
+        	adoptionApplication.setOwner(owner);
+            model.put("adoptionApplication", adoptionApplication);
+            url = "adoptions/createOrUpdateAdoptionApplicationForm";
+        }
         
-        adoptionApplication.setOwner(owner);
-        
-        model.put("adoptionApplication", adoptionApplication);
-		
-		return "adoptions/createOrUpdateAdoptionApplicationForm";
+		return url;
 	}
 	
 	@PostMapping(value = "/petsInAdoption/adoptionRequest/new/{petId}")
@@ -152,11 +155,14 @@ public class AdoptionApplicationController {
                 .getContext()
                 .getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        User usuario = this.userService.findUser(userDetail.getUsername()).get();
-		
-        Owner owner = ownerService.findByUser(usuario);
+        Owner owner = new Owner();
+        
+    	User usuario = this.userService.findUser(userDetail.getUsername()).orElse(null);
+    	
+    	if(usuario!=null) {
+            owner = ownerService.findByUser(usuario);
+    	}
         return owner;
 	}
-	
 	
 }

@@ -43,6 +43,8 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 public class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
+	private static final String OWNER_INFORMATION = "redirect:/owners/{ownerId}";
+
 
 	private final PetService petService;
     private final OwnerService ownerService;
@@ -95,7 +97,7 @@ public class PetController {
                         result.rejectValue("name", "duplicate", "already exists");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
-                    return "redirect:/owners/{ownerId}";
+        			return OWNER_INFORMATION;
 		}
 	}
 
@@ -131,7 +133,7 @@ public class PetController {
                         result.rejectValue("name", "duplicate", "already exists");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
-			return "redirect:/owners/{ownerId}";
+			return OWNER_INFORMATION;
 		}
 	}
         
@@ -142,7 +144,7 @@ public class PetController {
     	Pet pet = this.petService.findPetById(petId);
     	owner.removePet(pet);
     	this.petService.deletePet(pet);
-    	return "redirect:/owners/{ownerId}";
+		return OWNER_INFORMATION;
     }
 
 }

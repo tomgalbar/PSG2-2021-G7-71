@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(controllers = CauseController.class,
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
-public class CauseControllerTests {
+class CauseControllerTests {
 	
 	private static final int TEST_CAUSE_ID = 1;
 	private static final int TEST_DONATION_ID = 1;

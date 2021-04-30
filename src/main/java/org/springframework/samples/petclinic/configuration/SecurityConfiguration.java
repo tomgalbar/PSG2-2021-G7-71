@@ -32,16 +32,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		String admin = "admin";
+		String owner = "owner";
+		
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
+				.antMatchers("/admin/**").hasAnyAuthority(admin)
+				.antMatchers("/owners/**").hasAnyAuthority(owner,admin)				
 				.antMatchers("/vets/**").authenticated()
 				.antMatchers("/causes/**").permitAll()
-				.antMatchers("/petsInAdoption/adoptionRequest/new/**").hasAnyAuthority("owner")
-				.antMatchers("/petsInAdoption/**").hasAnyAuthority("owner", "admin")
+				.antMatchers("/petsInAdoption/adoptionRequest/new/**").hasAnyAuthority(owner)
+				.antMatchers("/petsInAdoption/**").hasAnyAuthority(owner, admin)
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -75,8 +78,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {	    
-		//PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
-		//return encoder;
 	    return NoOpPasswordEncoder.getInstance();
 	}
 	

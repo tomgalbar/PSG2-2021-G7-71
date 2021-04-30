@@ -42,6 +42,6 @@ class CauseServiceTests {
 		
 		causes = this.causeService.findAll();
 	
-		assertThat(causes.size()).isEqualTo(found + 1);
+		assertThat(causes).hasSize(found + 1);
 	}
 }
