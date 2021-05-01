@@ -60,7 +60,7 @@ public class AdoptionApplicationController {
         
         List<Pet> petsOwner = new ArrayList<>();
         
-        if(owner.getId()!=null) {
+        if(owner!=null) {
         	petsInAdoption= petsInAdoption.stream().filter(x->!x.getOwner().equals(owner)).collect(Collectors.toList());
     		
     		List<AdoptionApplication> ownerApplications = owner.getAdoptionApplications();
@@ -124,7 +124,7 @@ public class AdoptionApplicationController {
         Owner owner = findOwnerLoggedIn();
         String url = "welcome";
 
-        if(owner.getId()!=null) {
+        if(owner!=null) {
         	adoptionApplication.setOwner(owner);
             model.put("adoptionApplication", adoptionApplication);
             url = "adoptions/createOrUpdateAdoptionApplicationForm";
@@ -155,14 +155,10 @@ public class AdoptionApplicationController {
                 .getContext()
                 .getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        Owner owner = new Owner();
         
     	User usuario = this.userService.findUser(userDetail.getUsername()).orElse(null);
-    	
-    	if(usuario!=null) {
-            owner = ownerService.findByUser(usuario);
-    	}
-        return owner;
+
+        return ownerService.findByUser(usuario);
 	}
 	
 }
