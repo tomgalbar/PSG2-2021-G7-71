@@ -49,6 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class OwnerController {
 
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
+	private static final String OWNERMODEL = "owner";
 
 	private final OwnerService ownerService;
 	
@@ -68,7 +69,7 @@ public class OwnerController {
 	@GetMapping(value = "/owners/new")
 	public String initCreationForm(Map<String, Object> model) {
 		Owner owner = new Owner();
-		model.put("owner", owner);
+		model.put(OWNERMODEL, owner);
 		return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
 	}
 
@@ -95,7 +96,7 @@ public class OwnerController {
 
 	@GetMapping(value = "/owners/find")
 	public String initFindForm(Map<String, Object> model) {
-		model.put("owner", new Owner());
+		model.put(OWNERMODEL, new Owner());
 		return "owners/findOwners";
 	}
 
@@ -154,7 +155,7 @@ public class OwnerController {
 	@GetMapping("/owners/{ownerId}")
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
-		mav.addObject("owner",this.ownerService.findOwnerById(ownerId));
+		mav.addObject(OWNERMODEL,this.ownerService.findOwnerById(ownerId));
     	mav.addObject("fullAccess", fullAccess(ownerId));
         
 		return mav;
@@ -162,23 +163,26 @@ public class OwnerController {
 	
 	//METODO PARA COMPROBAR QUE CADA OWNER SOLO EDITE SU PROPIA PAGINA
 	private Boolean fullAccess(int ownerId) {
+        Boolean fullAccess = false;
+		
 		Authentication auth = SecurityContextHolder
                 .getContext()
                 .getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
-        User usuario = this.userService.findUser(userDetail.getUsername()).get();
-        Owner owner = ownerService.findByUser(usuario);
-		
-        Set<Authorities> setAU = usuario.getAuthorities();
-        List<String> authorities = setAU.stream().map(x->x.getAuthority()).collect(Collectors.toList());
-        Boolean esAdmin = authorities.contains("admin");
         
-        Boolean fullAccess = false;
-        
-        if(esAdmin || (owner!=null && owner.getId()==ownerId)) {
-        	fullAccess= true;
+        User usuario = this.userService.findUser(userDetail.getUsername()).orElse(null);
+        	
+        if(usuario!=null) {
+            Owner owner = ownerService.findByUser(usuario);
+    		
+            Set<Authorities> setAU = usuario.getAuthorities();
+            List<String> authorities = setAU.stream().map(Authorities::getAuthority).collect(Collectors.toList());
+            Boolean esAdmin = authorities.contains("admin");
+            
+            if(Boolean.TRUE.equals(esAdmin) || (owner!=null && owner.getId()==ownerId)) {
+            	fullAccess= true;
+            }
         }
-        
         return fullAccess;
 	}
 

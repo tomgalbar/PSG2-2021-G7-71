@@ -36,7 +36,7 @@ import org.springframework.test.web.servlet.MockMvc;
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
 classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
-public class AdoptionApplicationControllerTests {
+class AdoptionApplicationControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
 	private static final int TEST_PET_ID = 7;

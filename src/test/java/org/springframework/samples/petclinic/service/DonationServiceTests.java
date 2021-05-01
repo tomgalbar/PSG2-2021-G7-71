@@ -48,7 +48,7 @@ class DonationServiceTests {
 		
 		donations = this.donationService.findAll();
 	
-		assertThat(donations.size()).isEqualTo(found + 1);
+		assertThat(donations).hasSize(found + 1);
 	}
 
 }

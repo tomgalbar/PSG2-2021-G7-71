@@ -35,7 +35,7 @@ class CauseTests {
 		assertThat(constraintViolations.size()).isEqualTo(2);
 		
 		ConstraintViolation<Cause> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("name");
+		assertThat(violation.getPropertyPath().toString()).hasToString("name");
 	}
 	
 	@Test
@@ -53,7 +53,7 @@ class CauseTests {
 		assertThat(constraintViolations.size()).isEqualTo(2);
 		
 		ConstraintViolation<Cause> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("description");
+		assertThat(violation.getPropertyPath().toString()).hasToString("description");
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ class CauseTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Cause> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("budgetTarget");
+		assertThat(violation.getPropertyPath().toString()).hasToString("budgetTarget");
 	}
 	
 	@Test
@@ -89,7 +89,7 @@ class CauseTests {
 		assertThat(constraintViolations.size()).isEqualTo(2);
 		
 		ConstraintViolation<Cause> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("organization");
+		assertThat(violation.getPropertyPath().toString()).hasToString("organization");
 	}
 	
 }
