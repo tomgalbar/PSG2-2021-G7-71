@@ -47,7 +47,8 @@ public class VetController {
 
 	private final VetService vetService;
 	
-	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm"; 
+	private static final String VIEWS_VET_CREATE_OR_UPDATE_FORM = "vets/createOrUpdateVetForm";
+	private static final String VETS_LIST = "redirect:/vets"; 
 
 	@Autowired
 	public VetController(VetService clinicService) {
@@ -111,7 +112,7 @@ public class VetController {
 			}
 			
 			this.vetService.saveVet(vet);
-			return "redirect:/vets";
+			return VETS_LIST;
 		}
 	}
 	
@@ -140,7 +141,7 @@ public class VetController {
 				}
 			}
 			this.vetService.saveVet(vet);
-			return "redirect:/vets";
+			return VETS_LIST;
 		}
     }
     
@@ -148,6 +149,6 @@ public class VetController {
 	public String deleteVet(@PathVariable("vetId") int vetId) {
 		Vet vet = this.vetService.findVetById(vetId);
 		this.vetService.deleteVet(vet);
-		return "redirect:/vets";
+		return VETS_LIST;
 	}
 }

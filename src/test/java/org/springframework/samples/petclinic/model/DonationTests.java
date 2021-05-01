@@ -33,7 +33,7 @@ class DonationTests {
 		assertThat(constraintViolations.size()).isEqualTo(2);
 		
 		ConstraintViolation<Donation> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("client");
+		assertThat(violation.getPropertyPath().toString()).hasToString("client");
 	}
 	
 	@Test
@@ -49,7 +49,7 @@ class DonationTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Donation> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("amount");
+		assertThat(violation.getPropertyPath().toString()).hasToString("amount");
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ class DonationTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Donation> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("amount");
+		assertThat(violation.getPropertyPath().toString()).hasToString("amount");
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ class DonationTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Donation> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("donationDate");
+		assertThat(violation.getPropertyPath().toString()).hasToString("donationDate");
 	}
 	
 	@Test
@@ -99,7 +99,7 @@ class DonationTests {
 		assertThat(constraintViolations.size()).isEqualTo(1);
 		
 		ConstraintViolation<Donation> violation = constraintViolations.iterator().next();
-		assertThat(violation.getPropertyPath().toString()).isEqualTo("cause");
+		assertThat(violation.getPropertyPath().toString()).hasToString("cause");
 	}
 
 }

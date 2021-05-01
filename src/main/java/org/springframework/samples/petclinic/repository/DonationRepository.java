@@ -10,8 +10,6 @@ public interface DonationRepository extends Repository<Donation, Integer>{
 	
 	void save(Donation cause) throws DataAccessException;
 	
-//	void delete(Donation cause);
-
 	List<Donation> findAll() throws DataAccessException;
 
 	Donation findById(Integer id) throws DataAccessException;

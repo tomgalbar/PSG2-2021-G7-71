@@ -96,22 +96,22 @@ public class Cause extends BaseEntity {
 	
 	public Double getBudgetAchieved() {
 		List<Donation> ld = getDonations();
-		Double budgetAchieved = 0.0;
+		Double res = 0.0;
 		
-		if(!ld.isEmpty() && ld !=null) {
-			budgetAchieved = ld.stream().mapToDouble(x->x.getAmount()).sum();
-			budgetAchieved = (double) Math.round(budgetAchieved*100)/100;
+		if(ld !=null) {
+			res = ld.stream().mapToDouble(Donation::getAmount).sum();
+			res = (double) Math.round(res*100)/100;
 		}
 		
-		return budgetAchieved;
+		return res;
 	}
 
 	public Boolean getIsClosed() {
-		Boolean isClosed = false;
+		Boolean res = false;
 		if(getBudgetAchieved()>=getBudgetTarget()) {
-			isClosed=true;
+			res=true;
 		}
-		return isClosed;
+		return res;
 	}
 	
 	protected Set<Donation> getDonationsInternal() {
