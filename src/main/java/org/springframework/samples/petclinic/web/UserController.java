@@ -62,6 +62,12 @@ public class UserController {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
+		
+		if(ownerService.findByUser(owner.getUser())!=null) {
+			result.rejectValue("user.username", "userAlreadyExists", "Este nombre de usuario ya se encuentra en uso");
+			return VIEWS_OWNER_CREATE_FORM;
+		}
+		
 		else {
 			//creating owner, user, and authority
 			this.ownerService.saveOwner(owner);
