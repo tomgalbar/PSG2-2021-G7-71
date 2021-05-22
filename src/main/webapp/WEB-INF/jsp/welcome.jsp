@@ -5,7 +5,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 
 <petclinic:layout pageName="home">
-    <h2><fmt:message key="welcome"/></h2>
+    <h2 align="center"><fmt:message key="welcome"/></h2>
     <div class="row">
         <div class="col-md-12">
             <spring:url value="/resources/images/perrito-Spring.jpg" htmlEscape="true" var="petsImage"/>
