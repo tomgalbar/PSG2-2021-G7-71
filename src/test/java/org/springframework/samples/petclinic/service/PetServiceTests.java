@@ -276,8 +276,8 @@ class PetServiceTests {
 		
 		Booking b = new Booking();
 		b.setDetails("TEST");
-		b.setStartDate(LocalDate.of(2021, 01, 01));
-		b.setFinishDate(LocalDate.of(2021, 01, 04));	
+		b.setStartDate(LocalDate.of(2022, 01, 01));
+		b.setFinishDate(LocalDate.of(2022, 01, 04));	
 		b.setPet(petService.findPetById(1));
 		
 		this.petService.saveBooking(b);

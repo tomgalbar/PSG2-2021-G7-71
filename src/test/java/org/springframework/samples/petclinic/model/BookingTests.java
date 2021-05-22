@@ -27,8 +27,8 @@ class BookingTests {
 		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		Booking booking = new Booking();
 		booking.setDetails("");
-		booking.setStartDate(LocalDate.of(2021, 01, 01));
-		booking.setFinishDate(LocalDate.of(2021, 01, 04));
+		booking.setStartDate(LocalDate.of(2022, 01, 01));
+		booking.setFinishDate(LocalDate.of(2022, 01, 04));
 		booking.setPet(new Pet());
 
 		Validator validator = createValidator();
