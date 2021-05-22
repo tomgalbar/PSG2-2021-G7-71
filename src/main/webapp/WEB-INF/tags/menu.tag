@@ -58,6 +58,12 @@
 						<span><fmt:message key="Adoptions"/></span>
 					</petclinic:menuItem>
 				</sec:authorize>
+				
+				<petclinic:menuItem active="${name eq 'developers'}" url="/developers"
+					title="developers">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span><fmt:message key="developers"/></span>
+				</petclinic:menuItem>
 
 			</ul>
 			
