@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +28,7 @@ public class Booking extends BaseEntity {
 	
 	@Column(name = "start_date")
 	@NotNull(message = "La fecha no puede ser nula. Seleccione una fecha por favor")
+	@FutureOrPresent(message = "La fecha debe ser futura o presente")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startDate;
 	
