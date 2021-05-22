@@ -60,8 +60,8 @@ class BookingControllerTests {
     @Test
     void testProcessNewBookingFormSuccess() throws Exception {
 		mockMvc.perform(post("/owners/*/pets/{petId}/bookings/new", TEST_PET_ID)
-				.param("startDate", "2021/05/05")
-				.param("finishDate", "2021/05/10")
+				.param("startDate", "2022/05/05")
+				.param("finishDate", "2022/05/10")
 				.with(csrf())
 				.param("details", "Booking details"))                                
             .andExpect(status().is3xxRedirection())
