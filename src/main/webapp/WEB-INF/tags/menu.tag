@@ -37,13 +37,13 @@
 					</petclinic:menuItem>
 				</sec:authorize>
 				
-				<sec:authorize access="isAuthenticated()">
+
 					<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
 						title="veterinarios">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span><fmt:message key="veterinarians"/></span>
 					</petclinic:menuItem>
-				</sec:authorize>
+
 				
 				<petclinic:menuItem active="${name eq 'causes'}" url="/causes"
 					title="causas">
