@@ -1,4 +1,4 @@
-<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ page session="false" trimDirectiveWhitespaces="true" pageEncoding="UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -28,11 +28,11 @@
                     <c:out value="${cause.name}"/>
                 </td>
                 <td>
-                    <c:out value="${cause.budgetAchieved}"/>
+                    <c:out value="${cause.budgetAchieved} €"/>
                 </td>
                 
                 <td>
-                    <c:out value="${cause.budgetTarget}"/>
+                    <c:out value="${cause.budgetTarget} €"/>
                 </td>
                 
 				<c:choose>
