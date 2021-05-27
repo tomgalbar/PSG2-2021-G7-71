@@ -19,7 +19,7 @@ In the retrospective meeting, the team has a discussion about those results.
 
 ## Example:
 
-### Sprint 4: L4-Measurement 
+### Sprint 4: L4-ITIL 
 
 | Day           | J. A. Parejo  |
 | ------------- | ------------- |
