@@ -1,4 +1,4 @@
-# Niko Niko Calendar of team X
+# Niko Niko Calendar of team G7-71
 ## Introduction
 Some interesting links about what a Niko Niko calendar is and opinions about its use in software development:
 
@@ -19,7 +19,7 @@ In the retrospective meeting, the team has a discussion about those results.
 
 ## Example:
 
-### Sprint 3: L3-Measurement 
+### Sprint 4: L4-Measurement 
 
 | Day           | J. A. Parejo  |
 | ------------- | ------------- |
@@ -32,10 +32,31 @@ In the retrospective meeting, the team has a discussion about those results.
 
 ## Sprint Template
 
-| Day           | JAPAREJO    | Juanito  | [Member C]     | [Member D]     | [Member E]     | [Member F]     |
+| Day           | Servando    | Alejandro  | Tomás     | Horacio     | Enrique     | Victor     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
-| Day 1         | :smile:        |                |                |                |                |                |
-| Day 2         |               |    :smile:            |                |                |                |                |
-| Day 3         |               |    :worried:            |                |                |                |                |
-| Day 4         |  :neutral_face:             |               |                |                |                |                |
-...
+| Day 1         |         |                |                |                |                |                |
+| Day 2         |               |                |                |                |                |                |
+| Day 3         |               |                |                |                |                |                |
+| Day 4         |               |               |                |                |                |                |
+| Day 5         |               |               |                |                |                |                |
+| Day 6         |               |               |                |                |                |                |
+| Day 7         |             |               |                |                |                |                |
+| Day 8         |              |               |                |                |                |                |
+| Day 9         |              |               |                |                |                |                |
+| Day 10         |              |               |                |                |                |                |
+| Day 11        |              |               |                |                |                |                |
+| Day 12         |               |               |                |                |                |                |
+| Day 13         |              |               |                |                |                |                |
+| Day 14         |             |               |                |                |                |                |
+| Day 15         |               |               |                |                |                |                |
+| Day 16         |               |               |                |                |                |                |
+| Day 17         |               |               |                |                |                |                |
+| Day 18         |               |               |                |                |                |                |
+| Day 19         |               |               |                |                |                |                |
+| Day 20         |              |               |                |                |                |                |
+| Day 21         |             |               |                |                |                |                |
+| Day 22         |              |               |                |                |                |                |
+| Day 23         |             |               |                |                |                |                |
+| Day 24         |               |               |                |                |                |                |
+| Day 25         |               |               |                |                |                |                |
+| Day 26         |               |               |                |                |                |                |
