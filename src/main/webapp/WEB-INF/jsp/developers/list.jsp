@@ -15,71 +15,29 @@
         <thead>
         <tr>
             <th><fmt:message key="name"/></th>
-            <th><fmt:message key="rol"/></th>
+            <th><fmt:message key="email"/></th>
+            <th><fmt:message key="telephone"/></th>
         </tr>
         </thead>
         <tbody>
-	         <tr>
-		         <td>
-		             <c:out value="SERVANDO FIGUEROA GÓMEZ"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Development Team"/>
-		         </td>
-		         
-	         </tr>
-	         
-	         <tr>
-		         <td>
-		             <c:out value="ALEJANDRO FRAILE RODRIGUEZ"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Development Team"/>
-		         </td>
-	         </tr>
-	         
-	         <tr>
-		         <td>
-		             <c:out value="TOMAS GALERA BARRERA"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Scrum Master"/>
-		         </td>
-	         </tr>
-	         
-	         <tr>
-		         <td>
-		             <c:out value="HORACIO GARCIA LERGO"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Development Team"/>
-		         </td>
-	         </tr>
-	         
-	         <tr>
-		         <td>
-		             <c:out value="ENRIQUE GONZÁLEZ BOZA"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Development Team"/>
-		         </td>
-	         </tr>
-	         
-	         <tr>
-		         <td>
-		             <c:out value="VICTOR MONTESEIRIN PUIG"/>
-		         </td>
-		         
-		         <td>
-		         	<c:out value="Development Team"/>
-		         </td>
-	         </tr>
+	        <c:forEach items="${developersInfoList}" var="personInfo">
+		         <tr>
+			         <td>
+                    	<c:out value="${personInfo.name}"/>
+			         </td>
+			         
+			         <td>
+                    	<c:out value="${personInfo.email}"/>
+			         </td>
+			         
+			         <td>
+			             <c:out value="${personInfo.phone}"/>
+			         </td>
+		         </tr>
+		    </c:forEach>
         </tbody>
     </table>
-
+    
+    <p><b><fmt:message key="iTopData"/></b></p>
+    <p><fmt:message key="iTopURLText"/><a href="http://itop-g7-71-38ac57.appfleet.net/pages/UI.php"><fmt:message key="iTopURL"/></a></p>
 </petclinic:layout>
